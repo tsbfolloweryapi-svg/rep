@@ -1,20 +1,18 @@
-#// Файл: Task4/MenuItem.h
-#// Действие: объявляем структуру/класс пункта меню Task4
 #pragma once
-// ����� ����
+// пункт меню
 class MenuItem
 {
-	// ��� �������
+	// код команды
 	int command_;
 
-	// ����� ������ ����
+	// текст пункта меню
 	string text_;
 
-	// ������� ���������� ������ ����
+	// признак выбранного пункта меню
 	bool selected_;
 
 public:
-	// ������������ � ����������
+	// конструкторы и деструктор
 	MenuItem();
 	
 	// MenuItem(int command, const char* text);
@@ -24,10 +22,10 @@ public:
 
 	~MenuItem() = default;
 
-	// ���������� �������� ������������
+	// перегрузка операции присваивания
 	MenuItem& operator=(const MenuItem& other) = default;
 
-	// ���������
+	// аксессоры
     int command() const;
 	const string &text() const;
 	bool isSelected() const;

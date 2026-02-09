@@ -17,10 +17,6 @@
 #include <algorithm>
 #include <numeric>
 
-#include <locale> // чтоб не мучаться с кодировками
-#include <map>    // for freq dict
-#include <list>
-
 using namespace std;
 
 // объявление символической константы - кодовой страницы (UTF-8)
