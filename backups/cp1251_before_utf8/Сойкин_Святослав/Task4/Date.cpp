@@ -2,9 +2,11 @@
 #include "Date.h"
 
 // Установка даты с проверкой корректности
+// Блок
 void Date::setDate(short day, short month, short year) {
     // Проверяем корректность даты
     char buf[1024];
+// Вывод/Отображение
     if (!dateValid(day, month, year)) {
         sprintf(buf, "%02d/%02d/%04d - некорректная дата", day, month, year);
         throw exception(buf);
@@ -18,6 +20,7 @@ void Date::setDate(short day, short month, short year) {
 
 
 // Преобразовать дату в строковый формат DD.MM.YYYY
+// Работа с файлом
 string Date::toString() const {
     ostringstream oss;
     oss << setw(2) << setfill('0') << day_ << "."
@@ -39,6 +42,7 @@ bool Date::operator==(const Date& date) const {
 } // operator==
 
 
+// Блок
 int Date::toJulianDays() const {
     int a = (14 - getMonth()) / 12;
     int y = getYear() + 4800 - a;
@@ -47,6 +51,7 @@ int Date::toJulianDays() const {
 } // Date::toJulianDays
 
 
+// Блок
 void Date::toGrigorian(int julianDays) {
     int a = julianDays + 32044;
     int b = (4 * a + 3) / 146097;
@@ -77,6 +82,7 @@ istream& operator>>(istream& is, Date& date) {
 
 
 // Static methods definitions
+// Блок
 bool Date::dateValid(short day, short month, short year) {
     if (year < 0) return false;
     if (month < 1 || month > 12) return false;
@@ -84,7 +90,9 @@ bool Date::dateValid(short day, short month, short year) {
     return true;
 }
 
+// Блок
 short Date::daysInMonth(short month, short year) {
+// Блок
     switch (month) {
     case 4:  case 6:  case 9:  case 11: return 30;
     case 2:  return isLeapYear(year) ? 29 : 28;
@@ -92,6 +100,7 @@ short Date::daysInMonth(short month, short year) {
     } // switch
 }
 
+// Блок
 bool Date::isLeapYear(short year) {
     return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
 }

@@ -3,6 +3,7 @@
 
 App::App() {}
 
+// Вывод/Отображение
 void App::printList(const list<Payer>& lst, const string& title) const {
 
     const int consoleWidth = static_cast<int>(getConsoleSize().X);
@@ -45,6 +46,7 @@ void App::printList(const list<Payer>& lst, const string& title) const {
          << string(totalWidth + 16, '-') << "\n";
 
     int row = 1;
+// Блок
     for (const auto& p : lst) {
         cout << " "
              << left << setw(colRow - 1) << row++ << " | "
@@ -65,6 +67,7 @@ void App::printList(const list<Payer>& lst, const string& title) const {
     cout << string(totalWidth + 16, '-') << "\n";
 }
 
+// Вывод/Отображение
 void App::doAddPayer() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -77,6 +80,7 @@ void App::doAddPayer() {
     printList(payers_.getList(), "Список плательщиков");
 }
 
+// Вывод/Отображение
 void App::doDeleteById() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -94,6 +98,7 @@ void App::doDeleteById() {
     printList(payers_.getList(), "Список плательщиков");
 }
 
+// Фильтрация/Выборка
 void App::doSelectByTariff() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -109,6 +114,7 @@ void App::doSelectByTariff() {
     printList(res, "Плательщики по тарифу");
 }
 
+// Фильтрация/Выборка
 void App::doSelectByDiscount() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -124,6 +130,7 @@ void App::doSelectByDiscount() {
     printList(res, "Плательщики по скидке");
 }
 
+// Фильтрация/Выборка
 void App::doSelectBySumRange() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -138,6 +145,7 @@ void App::doSelectBySumRange() {
     printList(res, "Плательщики по сумме (в диапазоне)");
 }
 
+// Сортировка
 void App::doSortById() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -150,6 +158,7 @@ void App::doSortById() {
     printList(payers_.getList(), "Список плательщиков");
 }
 
+// Сортировка
 void App::doSortByName() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -162,6 +171,7 @@ void App::doSortByName() {
     printList(payers_.getList(), "Список плательщиков");
 }
 
+// Сортировка
 void App::doSortBySumDescending() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -174,6 +184,7 @@ void App::doSortBySumDescending() {
     printList(payers_.getList(), "Список плательщиков");
 }
 
+// Вывод/Отображение
 void App::doChangePayer() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -191,6 +202,7 @@ void App::doChangePayer() {
     printList(payers_.getList(), "Список плательщиков");
 }
 
+// Работа с файлом
 void App::doSaveToCSV() {
     cls();
     printList(payers_.getList(), "Список плательщиков");
@@ -203,6 +215,7 @@ void App::doSaveToCSV() {
     printList(payers_.getList(), "Список плательщиков");
 }
 
+// Работа с файлом
 void App::doLoadFromCSV() {
     cls();
     printList(payers_.getList(), "Список плательщиков");

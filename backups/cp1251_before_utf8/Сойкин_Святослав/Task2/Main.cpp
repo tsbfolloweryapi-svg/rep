@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "App.h"
 
+// Инициализация/Точка входа
 int main() {
     init(L"Task2: Обработка текста");
 
@@ -31,6 +32,7 @@ int main() {
 
     Menu menu(COORD{ 5, 5 }, items, mainColor, infoColor);
 
+// Вывод/Отображение
     while (true) {
         try {
             cls();
@@ -39,6 +41,7 @@ int main() {
             int cmd = menu.navigate();
             if (cmd == Menu::CMD_QUIT) break;
 
+// Перемещение/Трансформация
             switch (cmd) {
             case CMD_FREQ_WORDS: app.doFreqDictWords(); break;
             case CMD_FREQ_LETTERS: app.doFreqDictLetters(); break;
@@ -48,6 +51,7 @@ int main() {
             case CMD_ORDER_WORDS_IN_LINES: app.doOrderWordsInLines(); break;
             }
         }
+// Блок
         catch (exception& ex) {
             int x = 12, y = 8;
             cout << color(errColor)

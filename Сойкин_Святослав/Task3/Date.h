@@ -19,6 +19,7 @@ class Date : public Object
 public:
     // ансамбль конструкторов
     Date() : day_(1), month_(1), year_(1970) {}
+// Блок
     Date(short day, short month, short year) {
         setDate(day, month, year);
     } // Date

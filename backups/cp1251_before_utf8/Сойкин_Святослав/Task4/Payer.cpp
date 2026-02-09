@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include <sstream>
 
+// Инициализация/Точка входа
 Payer Payer::createFactory(int id) {
     Payer p;
     p.setId(id);
@@ -14,6 +15,7 @@ Payer Payer::createFactory(int id) {
     return p;
 }
 
+// Работа с файлом
 string Payer::toString() const {
     ostringstream oss;
     oss << "ID: " << getId() << ", ФИО: " << getName() << ", Телефон: " << getPhone()

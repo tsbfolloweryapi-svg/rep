@@ -8,12 +8,14 @@ App::App() : App("test.txt") {}
 App::App(const string& fileName) : fileName_(fileName) {}
 
 // viewText
+// Вывод/Отображение
 void App::viewText(const string& title, const string& fname) {
     cout << "     " << title << "\n"
         << "     +" << setfill('-') << setw(112) << "-" << "+"  // Уменьшено на 8
         << setfill(' ') << "\n";
 
     fstream fs(fname, ios::in);
+// Блок
     if (!fs.is_open()) {
         throw exception(("Ошибка открытия файла " + fname + " для чтения").c_str());
     }
@@ -21,6 +23,7 @@ void App::viewText(const string& title, const string& fname) {
 
     int row = 1;
     string line;
+// Блок
     while (getline(fs, line)) {
         cout << " " << setfill('0') << setw(3) << row++ << setfill(' ')
             << " | " << left << setw(110) << line << right << " |\n";  // Уменьшено на 8
@@ -31,13 +34,16 @@ void App::viewText(const string& title, const string& fname) {
 }
 
 // show
+// Вывод/Отображение
 void App::show(const string& title, const map<string, double>& freqDict) {
     cout << "    " << title << "\n" << setprecision(3);
 
     int counter = 1;
+// Подсчёт/Агрегация
     for (const auto& item : freqDict) {
         cout << "    " << left << setw(20) << item.first << right
             << setw(5) << item.second << " || ";
+// Подсчёт/Агрегация
         if (counter++ % 3 == 0) {
             cout << "\n";
         }
@@ -46,6 +52,7 @@ void App::show(const string& title, const map<string, double>& freqDict) {
 }
 
 // doFreqDictWords
+// Работа с файлом
 void App::doFreqDictWords() {
     cls();
     viewText("Файл " + fileName_ + ", текст для обработки:", fileName_);
@@ -55,6 +62,7 @@ void App::doFreqDictWords() {
         map<string, double> freqDict = TextProcessor::makeWordsFrequencyDict(fileName_);
         show("\n\n    Частотный словарь слов текста, файл " + fileName_ + ":", freqDict);
     }
+// Инициализация/Точка входа
     catch (const exception& ex) {
         cout << color(errColor) << "Ошибка: " << ex.what() << color(mainColor) << "\n";
     }
@@ -63,6 +71,7 @@ void App::doFreqDictWords() {
 }
 
 // doFreqDictLetters
+// Работа с файлом
 void App::doFreqDictLetters() {
     cls();
     viewText("Файл " + fileName_ + ", текст для обработки:", fileName_);
@@ -72,6 +81,7 @@ void App::doFreqDictLetters() {
         map<string, double> freqDict = TextProcessor::makeLettersFrequencyDict(fileName_);
         show("\n\n    Частотный словарь букв текста, файл " + fileName_ + ":", freqDict);
     }
+// Инициализация/Точка входа
     catch (const exception& ex) {
         cout << color(errColor) << "Ошибка: " << ex.what() << color(mainColor) << "\n";
     }
@@ -80,6 +90,7 @@ void App::doFreqDictLetters() {
 }
 
 // doSwapLines
+// Перемещение/Трансформация
 void App::doSwapLines() {
     cls();
     viewText("Файл " + fileName_ + ", текст для обработки:", fileName_);
@@ -92,6 +103,7 @@ void App::doSwapLines() {
 
         vector<string> lines;
         string line;
+// Блок
         while (getline(in, line)) {
             lines.push_back(line);
         }
@@ -105,6 +117,7 @@ void App::doSwapLines() {
         ofstream out(outFile);
         if (!out.is_open()) throw runtime_error(("Ошибка записи в " + outFile).c_str());
         out.imbue(locale(".1251"));
+// Блок
         for (const auto& l : lines) {
             out << l << "\n";
         }
@@ -114,6 +127,7 @@ void App::doSwapLines() {
         cls();
         viewText("Результат в " + outFile + ":", outFile);
     }
+// Инициализация/Точка входа
     catch (const exception& ex) {
         cout << color(errColor) << "Ошибка: " << ex.what() << color(mainColor) << "\n";
     }
@@ -122,6 +136,7 @@ void App::doSwapLines() {
 }
 
 // doWordsCapitalize
+// Работа с файлом
 void App::doWordsCapitalize() {
     cls();
     viewText("Файл " + fileName_ + ", текст для обработки:", fileName_);
@@ -134,16 +149,20 @@ void App::doWordsCapitalize() {
 
         vector<string> lines;
         string line;
+// Блок
         while (getline(in, line)) {
             lines.push_back(line);
         }
         in.close();
 
         vector<string> newLines;
+// Работа с файлом
         for (auto l : lines) {
             stringstream ss(l);
             string newL, word;
+// Блок
             while (ss >> word) {
+// Блок
                 if (!word.empty()) {
                     word[0] = toupper(static_cast<unsigned char>(word[0]));
                     transform(word.begin() + 1, word.end(), word.begin() + 1, [](unsigned char c) { return tolower(c); });
@@ -158,6 +177,7 @@ void App::doWordsCapitalize() {
         ofstream out(outFile);
         if (!out.is_open()) throw runtime_error(("Ошибка записи в " + outFile).c_str());
         out.imbue(locale(".1251"));
+// Блок
         for (const auto& l : newLines) {
             out << l << "\n";
         }
@@ -167,6 +187,7 @@ void App::doWordsCapitalize() {
         cls();
         viewText("Результат в " + outFile + ":", outFile);
     }
+// Инициализация/Точка входа
     catch (const exception& ex) {
         cout << color(errColor) << "Ошибка: " << ex.what() << color(mainColor) << "\n";
     }
@@ -175,6 +196,7 @@ void App::doWordsCapitalize() {
 }
 
 // doOrderByLen
+// Работа с файлом
 void App::doOrderByLen() {
     cls();
     viewText("Файл " + fileName_ + ", текст для обработки:", fileName_);
@@ -187,6 +209,7 @@ void App::doOrderByLen() {
 
         vector<string> lines;
         string line;
+// Блок
         while (getline(in, line)) {
             lines.push_back(line);
         }
@@ -198,6 +221,7 @@ void App::doOrderByLen() {
         ofstream out(outFile);
         if (!out.is_open()) throw runtime_error(("Ошибка записи в " + outFile).c_str());
         out.imbue(locale(".1251"));
+// Блок
         for (const auto& l : lines) {
             out << l << "\n";
         }
@@ -207,6 +231,7 @@ void App::doOrderByLen() {
         cls();
         viewText("Результат в " + outFile + ":", outFile);
     }
+// Инициализация/Точка входа
     catch (const exception& ex) {
         cout << color(errColor) << "Ошибка: " << ex.what() << color(mainColor) << "\n";
     }
@@ -215,6 +240,7 @@ void App::doOrderByLen() {
 }
 
 // doOrderWordsInLines
+// Работа с файлом
 void App::doOrderWordsInLines() {
     cls();
     viewText("Файл " + fileName_ + ", текст для обработки:", fileName_);
@@ -227,14 +253,17 @@ void App::doOrderWordsInLines() {
 
         vector<string> lines;
         string line;
+// Блок
         while (getline(in, line)) {
             lines.push_back(line);
         }
         in.close();
 
         vector<string> newLines;
+// Сортировка
         for (const auto& l : lines) {
             vector<string> words = TextProcessor::splitBySpace(l);
+// Сортировка
             sort(words.begin(), words.end(), [](const string& a, const string& b) {
                 string la = a, lb = b;
                 transform(la.begin(), la.end(), la.begin(), [](unsigned char c) { return tolower(c); });
@@ -242,6 +271,7 @@ void App::doOrderWordsInLines() {
                 return la < lb;
                 });
             string newL;
+// Блок
             for (const auto& w : words) {
                 newL += w + " ";
             }
@@ -253,6 +283,7 @@ void App::doOrderWordsInLines() {
         ofstream out(outFile);
         if (!out.is_open()) throw runtime_error(("Ошибка записи в " + outFile).c_str());
         out.imbue(locale(".1251"));
+// Блок
         for (const auto& l : newLines) {
             out << l << "\n";
         }
@@ -262,6 +293,7 @@ void App::doOrderWordsInLines() {
         cls();
         viewText("Результат в " + outFile + ":", outFile);
     }
+// Инициализация/Точка входа
     catch (const exception& ex) {
         cout << color(errColor) << "Ошибка: " << ex.what() << color(mainColor) << "\n";
     }

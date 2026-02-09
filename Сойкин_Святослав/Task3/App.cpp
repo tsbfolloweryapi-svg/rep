@@ -3,12 +3,14 @@
 
 App::App() {}
 
+// Вывод/Отображение
 void App::printList(const list<Request>& lst, const string& title) const {
     cout << "     " << title << "\n"
         << "     +" << setfill('-') << setw(112) << "-" << "+"
         << setfill(' ') << "\n";
 
     int row = 1;
+// Блок
     for (const auto& r : lst) {
         cout << " " << setfill('0') << setw(3) << row++ << setfill(' ')
             << " | ID: " << setw(2) << r.id
@@ -21,6 +23,7 @@ void App::printList(const list<Request>& lst, const string& title) const {
         << setfill(' ') << "\n";
 }
 
+// Обработка/Запросы
 void App::doAddRequest() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -33,6 +36,7 @@ void App::doAddRequest() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Вывод/Отображение
 void App::doDeleteById() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -51,6 +55,7 @@ void App::doDeleteById() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Фильтрация/Выборка
 void App::doSelectByFlight() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -67,6 +72,7 @@ void App::doSelectByFlight() {
     printList(res, "Заявки по рейсу");
 }
 
+// Фильтрация/Выборка
 void App::doSelectByDate() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -83,6 +89,7 @@ void App::doSelectByDate() {
     printList(res, "Заявки по дате");
 }
 
+// Фильтрация/Выборка
 void App::doSelectByPassenger() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -99,6 +106,7 @@ void App::doSelectByPassenger() {
     printList(res, "Заявки по пассажиру");
 }
 
+// Сортировка
 void App::doSortById() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -111,6 +119,7 @@ void App::doSortById() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Сортировка
 void App::doSortByDate() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -123,6 +132,7 @@ void App::doSortByDate() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Сортировка
 void App::doSortByDestination() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -135,6 +145,7 @@ void App::doSortByDestination() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Обработка/Запросы
 void App::doChangeRequest() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -152,6 +163,7 @@ void App::doChangeRequest() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Работа с файлом
 void App::doSaveToBinaryFixed() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -164,6 +176,7 @@ void App::doSaveToBinaryFixed() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Работа с файлом
 void App::doLoadFromBinaryFixed() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -176,6 +189,7 @@ void App::doLoadFromBinaryFixed() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Работа с файлом
 void App::doSwapFirstLastInFile() {
     cls();
     printList(getRequests(), "Список заявок");
@@ -188,6 +202,7 @@ void App::doSwapFirstLastInFile() {
     printList(getRequests(), "Текущий список заявок");
 }
 
+// Работа с файлом
 void App::doSwapEarliestLatestInFile() {
     cls();
     printList(getRequests(), "Список заявок");

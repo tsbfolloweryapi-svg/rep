@@ -4,6 +4,7 @@
 #include "Menu.h"
 #include "App.h"
 
+// Инициализация/Точка входа
 int main() {
     init(L"Task3: Заявки на авиабилеты");
 
@@ -45,6 +46,7 @@ int main() {
 
     Menu menu(COORD{ 5, 5 }, items, mainColor, infoColor);
 
+// Вывод/Отображение
     while (true) {
         try {
             cls();
@@ -53,6 +55,7 @@ int main() {
             int cmd = menu.navigate();
             if (cmd == Menu::CMD_QUIT) break;
 
+// Фильтрация/Выборка
             switch (cmd) {
             case CMD_ADD: app.doAddRequest(); break;
             case CMD_REMOVE: app.doDeleteById(); break;
@@ -71,6 +74,7 @@ int main() {
 
             getKey("");
         }
+// Блок
         catch (exception& ex) {
             int x = 12, y = 8;
             cout << color(errColor)

@@ -9,52 +9,66 @@ Requests::Requests() {
     }
 }
 
+// Обработка/Запросы
 void Requests::addRequest() {
     list_.push_back(Request::createFactory(nextId_++));
 }
 
+// Обработка/Запросы
 void Requests::deleteById(int id) {
     list_.remove_if([id](const Request& r) { return r.getId() == id; });
 }
 
+// Фильтрация/Выборка
 list<Request> Requests::selectByFlight(const string& flight) {
     list<Request> result;
+// Блок
     for (const auto &r : list_) {
         if (r.getFlightNum() == flight) result.push_back(r);
     }
     return result;
 }
 
+// Фильтрация/Выборка
 list<Request> Requests::selectByDate(const Date& date) {
     list<Request> result;
+// Блок
     for (const auto &r : list_) {
         if (r.getDate() == date) result.push_back(r);
     }
     return result;
 }
 
+// Фильтрация/Выборка
 list<Request> Requests::selectByPassenger(const string& pass) {
     list<Request> result;
+// Блок
     for (const auto &r : list_) {
         if (r.getPassenger() == pass) result.push_back(r);
     }
     return result;
 }
 
+// Сортировка
 void Requests::sortById() {
     list_.sort([](const Request& a, const Request& b) { return a.getId() < b.getId(); });
 }
 
+// Сортировка
 void Requests::sortByDate() {
     list_.sort([](const Request& a, const Request& b) { return a.getDate() < b.getDate(); });
 }
 
+// Сортировка
 void Requests::sortByDestination() {
     list_.sort([](const Request& a, const Request& b) { return a.getDestination() < b.getDestination(); });
 }
 
+// Обработка/Запросы
 void Requests::changeRequest(int id) {
+// Инициализация/Точка входа
     for (auto& r : list_) {
+// Инициализация/Точка входа
         if (r.getId() == id) {
             Request newR = Request::createFactory(id);
             r = newR;  // copy
@@ -64,27 +78,32 @@ void Requests::changeRequest(int id) {
     throw exception("Заявка не найдена");
 }
 
+// Работа с файлом
 void Requests::saveToBinaryFixed(const string& fname) const {
     ofstream out(fname, ios::binary | ios::trunc);
     if (!out.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());
 
+// Работа с файлом
     for (const auto& r : list_) {
         r.writeBinary(out);
     }
 }
 
+// Работа с файлом
 void Requests::loadFromBinaryFixed(const string& fname) {
     ifstream in(fname, ios::binary);
     if (!in.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());
 
     list_.clear();
     Request r;
+// Работа с файлом
     while (Request::readBinary(in, r)) {
         list_.push_back(r);
         nextId_ = max(nextId_, r.getId() + 1);
     }
 }
 
+// Работа с файлом
 void Requests::swapFirstLastInFile(const string& fname) {
     fstream f(fname, ios::binary | ios::in | ios::out);
     if (!f.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());
@@ -113,6 +132,7 @@ void Requests::swapFirstLastInFile(const string& fname) {
     first.writeBinary(f);
 }
 
+// Работа с файлом
 void Requests::swapEarliestLatestInFile(const string& fname) {
     fstream f(fname, ios::binary | ios::in | ios::out);
     if (!f.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());

@@ -5,6 +5,7 @@
 #include <sstream>
 #include <stdexcept>  // for runtime_error
 
+// Работа с файлом
 void checkInputFormat(istringstream& iss) {
     if (iss.fail()) throw runtime_error("CSV: неверный формат поля");
 }
@@ -15,32 +16,40 @@ Payers::Payers() {
     }
 }
 
+// Инициализация/Точка входа
 void Payers::addPayer() {
     list_.push_back(Payer::createFactory(nextId_++));
 }
 
+// Фильтрация/Выборка
 void Payers::deleteById(int id) {
     list_.remove_if([id](const Payer& p) { return p.getId() == id; });
 }
 
+// Фильтрация/Выборка
 list<Payer> Payers::selectByTariff(double tariff) const {
     list<Payer> result;
+// Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [tariff](const Payer& p) {
         return eq(p.getTariff(), tariff);
         });
     return result;
 }
 
+// Фильтрация/Выборка
 list<Payer> Payers::selectByDiscount(int discount) const {
     list<Payer> result;
+// Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [discount](const Payer& p) {
         return p.getDiscount() == discount;
         });
     return result;
 }
 
+// Фильтрация/Выборка
 list<Payer> Payers::selectBySumRange(double low, double high) const {
     list<Payer> result;
+// Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [low, high](const Payer& p) {
         double sum = p.calculateSum();
         return sum >= low && sum <= high;
@@ -49,58 +58,73 @@ list<Payer> Payers::selectBySumRange(double low, double high) const {
     return result;
 }
 
+// Фильтрация/Выборка
 list<Payer> Payers::selectByPhone(const string& phone) const {
     list<Payer> result;
+// Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [&phone](const Payer& p) {
         return p.getPhone() == phone;
     });
     return result;
 }
 
+// Фильтрация/Выборка
 list<Payer> Payers::selectByName(const string& name) const {
     list<Payer> result;
+// Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [&name](const Payer& p) {
         return p.getName() == name;
     });
     return result;
 }
 
+// Фильтрация/Выборка
 list<Payer> Payers::selectByDate(const Date& date) const {
     list<Payer> result;
+// Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [&date](const Payer& p) {
         return p.getDate() == date;
     });
     return result;
 }
 
+// Подсчёт/Агрегация
 double Payers::totalPayments() const {
     double sum = 0.0;
     for (const auto& p : list_) sum += p.calculateSum();
     return sum;
 }
 
+// Сортировка
 void Payers::sortByPhone() {
     list_.sort([](const Payer& a, const Payer& b) { return a.getPhone() < b.getPhone(); });
 }
 
+// Сортировка
 void Payers::sortByTimeDescending() {
     list_.sort([](const Payer& a, const Payer& b) { return a.getTimeMin() > b.getTimeMin(); });
 }
 
+// Сортировка
 void Payers::sortById() {
     list_.sort([](const Payer& a, const Payer& b) { return a.getId() < b.getId(); });
 }
 
+// Сортировка
 void Payers::sortByName() {
     list_.sort([](const Payer& a, const Payer& b) { return a.getName() < b.getName(); });
 }
 
+// Сортировка
 void Payers::sortBySumDescending() {
     list_.sort([](const Payer& a, const Payer& b) { return a.calculateSum() > b.calculateSum(); });
 }
 
+// Инициализация/Точка входа
 void Payers::changePayer(int id) {
+// Инициализация/Точка входа
     for (auto& p : list_) {
+// Инициализация/Точка входа
         if (p.getId() == id) {
             p = Payer::createFactory(id);
             return;
@@ -109,17 +133,20 @@ void Payers::changePayer(int id) {
     throw runtime_error("Плательщик не найден");
 }
 
+// Работа с файлом
 void Payers::saveToCSV(const string& fname) const {
     ofstream out(fname);
     if (!out.is_open()) throw runtime_error(("Не удалось открыть файл для записи: " + fname).c_str());
 
     out << "ID,ФИО,Телефон,Тариф,Скидка,Минуты,День,Месяц,Год\n";
+// Подсчёт/Агрегация
     for (const auto& p : list_) {
         out << p.getId() << "," << p.getName() << "," << p.getPhone() << "," << p.getTariff() << "," << p.getDiscount()
             << "," << p.getTimeMin() << "," << p.getDate().getDay() << "," << p.getDate().getMonth() << "," << p.getDate().getYear() << "\n";
     }
 }
 
+// Работа с файлом
 void Payers::loadFromCSV(const string& fname) {
     if (fname.empty()) throw runtime_error("CSV: пустое имя файла.");
 
@@ -138,6 +165,7 @@ void Payers::loadFromCSV(const string& fname) {
     }
 
     list_.clear();
+// Работа с файлом
     while (getline(in, line)) {
         if (line.empty()) continue;
         istringstream iss(line);

@@ -1,6 +1,7 @@
 #include "Request.h"
 #include "Utils.h"
 
+// Инициализация/Точка входа
 Request Request::createFactory(int id) {
     Request r;
     r.id = id;
@@ -17,6 +18,7 @@ Request Request::createFactory(int id) {
     return r;
 }
 
+// Обработка/Запросы
 string Request::toString() const {
     ostringstream oss;
     oss << "ID: " << id << ", Пункт назначения: " << destination << ", Рейс: " << flightNum
@@ -24,6 +26,7 @@ string Request::toString() const {
     return oss.str();
 }
 
+// Работа с файлом
 void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&id), sizeof(id));
     os.write(destination, 31);
@@ -37,6 +40,7 @@ void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&year), sizeof(year));
 }
 
+// Работа с файлом
 bool Request::readBinary(istream& is, Request& out) {
     if (!is.read(reinterpret_cast<char*>(&out.id), sizeof(out.id))) return false;
     if (!is.read(out.destination, 31)) return false;

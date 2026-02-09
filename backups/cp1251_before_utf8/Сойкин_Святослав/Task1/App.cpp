@@ -2,6 +2,7 @@
 #include "Utils.h"
 
 // хелпер для вывода
+// Вывод/Отображение
 static void printVectorVisual(const vector<float>& v, const string& title = "", int perRow = 8) {
     if (!title.empty()) cout << title << " (size=" << v.size() << "):\n";
     const int w = 10;
@@ -20,6 +21,7 @@ App::App() : binFile_("task1_vector.bin") {
     for (auto &x : v_) x = getRand(-100.0f, 100.0f);
 }
 
+// Работа с файлом
 // Чтение одного числа с проверкой формата ввода (согласно правилам)
 float App::readFloatFromCin(const string &prompt) {
     // kept for compatibility but not used in automated run
@@ -29,6 +31,7 @@ float App::readFloatFromCin(const string &prompt) {
     return value;
 }
 
+// Работа с файлом
 void App::saveToBinary() const {
     ofstream out(binFile_, ios::binary | ios::out | ios::trunc);
     if (!out.is_open()) throw std::runtime_error("Не удалось открыть файл для записи");
@@ -39,6 +42,7 @@ void App::saveToBinary() const {
     if (out.fail()) throw std::runtime_error("Ошибка записи в бинарный файл");
 }
 
+// Работа с файлом
 void App::loadFromBinary() {
     ifstream in(binFile_, ios::binary | ios::in);
     if (!in.is_open()) throw std::runtime_error("Не удалось открыть файл для чтения");
@@ -48,6 +52,7 @@ void App::loadFromBinary() {
     if (in.fail()) throw std::runtime_error("Ошибка чтения размера из бинарного файла");
 
     vector<float> tmp;
+// Работа с файлом
     if (n) {
         tmp.resize(n);
         in.read(reinterpret_cast<char*>(tmp.data()), n * sizeof(float));
@@ -57,6 +62,7 @@ void App::loadFromBinary() {
     v_.swap(tmp);
 }
 
+// Работа с файлом
 void App::run() {
     init();
     // Сохраняем исходный вектор в бинарный файл перед обработками
@@ -88,26 +94,31 @@ void App::run() {
 }
 
 // основные методы
+// Подсчёт/Агрегация
 void App::step_countNegative() {
     const auto negCount = count_if(v_.begin(), v_.end(), [](float x){ return x < 0.0f; });
     cout << "1) Количество отрицательных элементов: " << negCount << "\n";
 }
 
+// Подсчёт/Агрегация
 void App::step_countOutsideInterval(float a, float b) {
     const auto notInInterval = count_if(v_.begin(), v_.end(), [a,b](float x){ return x < a || x > b; });
     cout << "2) Количество элементов вне [a,b]: " << notInInterval << "\n";
 }
 
+// Подсчёт/Агрегация
 void App::step_sumBeforeFirstMin() {
     const auto itMin = min_element(v_.begin(), v_.end());
     const float sumBeforeMin = (itMin == v_.begin() || itMin == v_.end()) ? 0.0f : accumulate(v_.begin(), itMin, 0.0f);
     cout << "3) Сумма перед первым минимальным элементом: " << sumBeforeMin << "\n";
 }
 
+// Подсчёт/Агрегация
 void App::step_sumBetweenFirstMinAndFirstMax() {
     const auto itMin = min_element(v_.begin(), v_.end());
     const auto itMax = max_element(v_.begin(), v_.end());
     float sumBetween = 0.0f;
+// Подсчёт/Агрегация
     if (itMin != v_.end() && itMax != v_.end() && itMin != itMax) {
         auto first = min(itMin, itMax);
         auto last = max(itMin, itMax);
@@ -116,6 +127,7 @@ void App::step_sumBetweenFirstMinAndFirstMax() {
     cout << "4) Сумма между первым min и первым max: " << sumBetween << "\n";
 }
 
+// Фильтрация/Выборка
 void App::step_selectNegatives() {
     vector<float> negatives;
     copy_if(v_.begin(), v_.end(), back_inserter(negatives), [](float x){ return x < 0.0f; });
@@ -123,6 +135,7 @@ void App::step_selectNegatives() {
     if (!negatives.empty()) printVectorVisual(negatives, string());
 }
 
+// Фильтрация/Выборка
 void App::step_selectOutsideInterval(float a, float b) {
     vector<float> outside;
     copy_if(v_.begin(), v_.end(), back_inserter(outside), [a,b](float x){ return x < a || x > b; });
@@ -130,18 +143,21 @@ void App::step_selectOutsideInterval(float a, float b) {
     if (!outside.empty()) printVectorVisual(outside, string());
 }
 
+// Сортировка
 void App::step_sortDescending() {
     sort(v_.begin(), v_.end(), greater<float>());
     cout << "7) Вектор после сортировки по убыванию:\n";
     printVectorVisual(v_, string());
 }
 
+// Сортировка
 void App::step_sortByAbsAscending() {
     sort(v_.begin(), v_.end(), [](float lhs, float rhs){ return fabs(lhs) < fabs(rhs); });
     cout << "8) Вектор после сортировки по возрастанию модулей:\n";
     printVectorVisual(v_, string());
 }
 
+// Перемещение/Трансформация
 void App::step_moveOutsideIntervalToEnd(float a, float b) {
     stable_partition(v_.begin(), v_.end(), [a,b](float x){ return x >= a && x <= b; });
     cout << "9) Перенос элементов вне [a,b] в конец (внутри-интервал в начале):\n";

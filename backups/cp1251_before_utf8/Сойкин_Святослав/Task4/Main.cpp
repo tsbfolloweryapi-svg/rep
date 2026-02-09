@@ -41,6 +41,7 @@ int main() try {
 
     Menu menu(COORD{ 5, 5 }, items, mainColor, infoColor);
 
+// Вывод/Отображение
     while (true) {
         cls();
         showNavBarMessage(hintColor, "Task4: Абоненты");
@@ -48,6 +49,7 @@ int main() try {
         int cmd = menu.navigate();
         if (cmd == Menu::CMD_QUIT) break;
 
+// Фильтрация/Выборка
         switch (cmd) {
         case CMD_ADD: app.doAddPayer(); break;
         case CMD_REMOVE: app.doDeleteById(); break;
