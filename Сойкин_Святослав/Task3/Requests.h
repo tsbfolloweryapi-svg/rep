@@ -1,5 +1,5 @@
-#// Файл: Task3/Requests.h
-#// Действие: объявляем контейнер запросов
+#// Р¤Р°Р№Р»: Task3/Requests.h
+#// Р”РµР№СЃС‚РІРёРµ: РѕР±СЉСЏРІР»СЏРµРј РєРѕРЅС‚РµР№РЅРµСЂ Р·Р°РїСЂРѕСЃРѕРІ
 #pragma once
 #include "pch.h"
 #include "Request.h"
@@ -19,9 +19,9 @@ public:
     void sortById();
     void sortByDate();
     void sortByDestination();
-    void changeRequest(int id);  // ���������
+    void changeRequest(int id);  // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-// ��������
+// получаем
     const list<Request>& getList() const { return list_; }
 
     void saveToBinaryFixed(const string& fname) const;

@@ -1,15 +1,15 @@
-#// Файл: Task3/Request.cpp
-#// Действие: реализуем запросы/операции для объектов
-// ��������� ��������
+#// Р¤Р°Р№Р»: Task3/Request.cpp
+#// Р”РµР№СЃС‚РІРёРµ: СЂРµР°Р»РёР·СѓРµРј Р·Р°РїСЂРѕСЃС‹/РѕРїРµСЂР°С†РёРё РґР»СЏ РѕР±СЉРµРєС‚РѕРІ
+// выполняем действие
 #include "Request.h"
 #include "Utils.h"
 
 Request Request::createFactory(int id) {
     Request r;
     r.id = id;
-    string dest = "����� ���������� " + to_string(getRand(1, 15));
+    string dest = "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + to_string(getRand(1, 15));
     string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
-    string pass = "������ " + to_string(getRand(1, 30)) + " �.�.";
+    string pass = "пїЅпїЅпїЅпїЅпїЅпїЅ " + to_string(getRand(1, 30)) + " пїЅ.пїЅ.";
     Date d;
     d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
 
@@ -17,15 +17,15 @@ Request Request::createFactory(int id) {
     strncpy(r.flightNum, flight.c_str(), 15); r.flightNum[15] = '\0';
     strncpy(r.passenger, pass.c_str(), 30); r.passenger[30] = '\0';
     r.date = d;
-// ��������� ��������
+// выполняем действие
     return r;
 }
 
 string Request::toString() const {
     ostringstream oss;
-    oss << "ID: " << id << ", ����� ����������: " << destination << ", ����: " << flightNum
-        << ", ��������: " << passenger << ", ����: " << date.toString();
-// ��������� ��������
+    oss << "ID: " << id << ", пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << destination << ", пїЅпїЅпїЅпїЅ: " << flightNum
+        << ", пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << passenger << ", пїЅпїЅпїЅпїЅ: " << date.toString();
+// выполняем действие
     return oss.str();
 }
 
@@ -39,7 +39,7 @@ void Request::writeBinary(ostream& os) const {
     short year = date.getYear();
     os.write(reinterpret_cast<const char*>(&day), sizeof(day));
     os.write(reinterpret_cast<const char*>(&month), sizeof(month));
-// ��������� � ����
+// сохраняем в файл
     os.write(reinterpret_cast<const char*>(&year), sizeof(year));
 }
 

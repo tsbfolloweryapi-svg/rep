@@ -1,5 +1,5 @@
-#// Файл: Task3/App.h
-#// Действие: объявляем интерфейс приложения Task3
+#// Р¤Р°Р№Р»: Task3/App.h
+#// Р”РµР№СЃС‚РІРёРµ: РѕР±СЉСЏРІР»СЏРµРј РёРЅС‚РµСЂС„РµР№СЃ РїСЂРёР»РѕР¶РµРЅРёСЏ Task3
 #pragma once
 #include "pch.h"
 #include "Requests.h"
@@ -11,9 +11,9 @@ private:
 
 public:
     App();
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     const string& getBinFile() const { return binFile_; }
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     const list<Request>& getRequests() const { return requests_.getList(); }
 
     void doAddRequest();

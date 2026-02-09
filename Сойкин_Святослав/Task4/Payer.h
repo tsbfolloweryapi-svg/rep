@@ -1,5 +1,5 @@
-#// пїЅпїЅпїЅпїЅ: Task4/Payer.h
-#// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+#// РїС—Р…РїС—Р…РїС—Р…РїС—Р…: Task4/Payer.h
+#// РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…: РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р… РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р… РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…РїС—Р…
 #pragma once
 #include "pch.h"
 #include "Object.h"
@@ -18,37 +18,37 @@ private:
 public:
     static Payer createFactory(int id);
 
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     int getId() const { return id_; }
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     string getName() const { return name_; }
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     string getPhone() const { return phone_; }
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     double getTariff() const { return tariff_; }
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     int getDiscount() const { return discount_; }
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     int getTimeMin() const { return timeMin_; }
-// получаем
+// РїРѕР»СѓС‡Р°РµРј
     Date getDate() const { return date_; }
 
-// суммируем
+// СЃСѓРјРјРёСЂСѓРµРј
     double calculateSum() const { return timeMin_ * tariff_ * (1 - discount_ / 100.0); }
 
-// устанавливаем
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј
     void setId(int id) { id_ = id; }
-// устанавливаем
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј
     void setName(const string& name) { name_ = name; }
-// устанавливаем
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј
     void setPhone(const string& phone) { phone_ = phone; }
-// устанавливаем
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј
     void setTariff(double tariff) { tariff_ = tariff; }
-// устанавливаем
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј
     void setDiscount(int discount) { discount_ = discount; }
-// устанавливаем
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј
     void setTimeMin(int timeMin) { timeMin_ = timeMin; }
-// устанавливаем
+// СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј
     void setDate(short d, short m, short y) { date_.setDate(d, m, y); }
 
     string toString() const override;
