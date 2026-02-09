@@ -28,6 +28,7 @@ void Payers::deleteById(int id) {
 
 // Фильтрация/Выборка
 list<Payer> Payers::selectByTariff(double tariff) const {
+    if (tariff <= 0) throw std::invalid_argument("Тариф должен быть положительным");
     list<Payer> result;
 // Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [tariff](const Payer& p) {
@@ -38,6 +39,7 @@ list<Payer> Payers::selectByTariff(double tariff) const {
 
 // Фильтрация/Выборка
 list<Payer> Payers::selectByDiscount(int discount) const {
+    if (discount < 0 || discount > 100) throw std::invalid_argument("Скидка должна быть в диапазоне [0, 100]");
     list<Payer> result;
 // Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [discount](const Payer& p) {
@@ -60,6 +62,7 @@ list<Payer> Payers::selectBySumRange(double low, double high) const {
 
 // Фильтрация/Выборка
 list<Payer> Payers::selectByPhone(const string& phone) const {
+    if (phone.empty()) throw std::invalid_argument("Номер телефона не может быть пустым");
     list<Payer> result;
 // Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [&phone](const Payer& p) {
@@ -70,6 +73,7 @@ list<Payer> Payers::selectByPhone(const string& phone) const {
 
 // Фильтрация/Выборка
 list<Payer> Payers::selectByName(const string& name) const {
+    if (name.empty()) throw std::invalid_argument("Имя плательщика не может быть пустым");
     list<Payer> result;
 // Фильтрация/Выборка
     copy_if(list_.begin(), list_.end(), back_inserter(result), [&name](const Payer& p) {
@@ -122,6 +126,7 @@ void Payers::sortBySumDescending() {
 
 // Инициализация/Точка входа
 void Payers::changePayer(int id) {
+    if (id <= 0) throw std::invalid_argument("ID должен быть положительным числом");
 // Инициализация/Точка входа
     for (auto& p : list_) {
 // Инициализация/Точка входа

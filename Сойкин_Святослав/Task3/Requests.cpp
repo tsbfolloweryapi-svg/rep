@@ -21,6 +21,7 @@ void Requests::deleteById(int id) {
 
 // Фильтрация/Выборка
 list<Request> Requests::selectByFlight(const string& flight) {
+    if (flight.empty()) throw std::invalid_argument("Номер рейса не может быть пуст");
     list<Request> result;
 // Блок
     for (const auto &r : list_) {
@@ -41,6 +42,7 @@ list<Request> Requests::selectByDate(const Date& date) {
 
 // Фильтрация/Выборка
 list<Request> Requests::selectByPassenger(const string& pass) {
+    if (pass.empty()) throw std::invalid_argument("Имя пассажира не может быть пусто");
     list<Request> result;
 // Блок
     for (const auto &r : list_) {
@@ -66,6 +68,7 @@ void Requests::sortByDestination() {
 
 // Обработка/Запросы
 void Requests::changeRequest(int id) {
+    if (id <= 0) throw std::invalid_argument("ID должен быть положительным числом");
 // Инициализация/Точка входа
     for (auto& r : list_) {
 // Инициализация/Точка входа
