@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Debug\\pch.obj",
+            "outputs": [
+                "x64\\Debug\\pch.h_4930BAB7961FA420.ifc.dt.module.json",
+                "x64\\Debug\\pch.h_4930BAB7961FA420.ifc.dt.d.json",
+                "x64\\Debug\\pch.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "C:\\Users\\swarn\\Desktop\\27_Lesson_PE521_04.02.2026_OOP_C++\\test\\project-project-20260208-2148\\Task3\\pch.h",
+                    "source-path": "c:\\users\\swarn\\desktop\\27_lesson_pe521_04.02.2026_oop_c++\\test\\project-project-20260208-2148\\task3\\pch.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
