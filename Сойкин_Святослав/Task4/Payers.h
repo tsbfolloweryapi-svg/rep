@@ -1,3 +1,5 @@
+#// пїЅпїЅпїЅпїЅ: Task4/Payers.h
+#// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 #pragma once
 #include "pch.h"
 #include "Payer.h"
@@ -26,6 +28,7 @@ public:
     void sortByTimeDescending();
     void changePayer(int id);
 
+// получаем
     const list<Payer>& getList() const { return list_; }
 
     void saveToCSV(const string& fname) const;

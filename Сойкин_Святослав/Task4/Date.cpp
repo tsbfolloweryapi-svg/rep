@@ -1,23 +1,28 @@
 #include "pch.h"
+#// Р¤Р°Р№Р»: Task4/Date.cpp
+#// Р”РµР№СЃС‚РІРёРµ: СЂРµР°Р»РёР·СѓРµРј СЂР°Р±РѕС‚Сѓ СЃ РґР°С‚РѕР№ РІ Task4
+// устанавливаем
 #include "Date.h"
 
-// Установка даты с проверкой корректности
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void Date::setDate(short day, short month, short year) {
-    // Проверяем корректность даты
+// выполняем действие
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     char buf[1024];
     if (!dateValid(day, month, year)) {
-        sprintf(buf, "%02d/%02d/%04d - некорректная дата", day, month, year);
+        sprintf(buf, "%02d/%02d/%04d - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ", day, month, year);
         throw exception(buf);
     } // if
 
-    // Сохраняем значения
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     day_ = day;
     month_ = month;
     year_ = year;
 } // Date::setDate
+// выполняем действие
 
 
-// Преобразовать дату в строковый формат DD.MM.YYYY
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ DD.MM.YYYY
 string Date::toString() const {
     ostringstream oss;
     oss << setw(2) << setfill('0') << day_ << "."
@@ -36,6 +41,7 @@ bool Date::operator<(const Date& date) const {
 
 bool Date::operator==(const Date& date) const {
     return getDay() == date.getDay() && getMonth() == date.getMonth() && getYear() == date.getYear();
+// выполняем действие
 } // operator==
 
 
@@ -44,6 +50,7 @@ int Date::toJulianDays() const {
     int y = getYear() + 4800 - a;
     int m = getMonth() + 12 * a - 3;
     return getDay() + (153 * m + 2) / 5 + 365 * y + y / 4 - y / 100 + y / 400 - 32045;
+// выполняем действие
 } // Date::toJulianDays
 
 
@@ -74,6 +81,7 @@ istream& operator>>(istream& is, Date& date) {
     date.setDate(day, month, year);
     return is;
 } // operator>>
+// выполняем действие
 
 
 // Static methods definitions
@@ -81,14 +89,17 @@ bool Date::dateValid(short day, short month, short year) {
     if (year < 0) return false;
     if (month < 1 || month > 12) return false;
     if (day < 1 || day > daysInMonth(month, year)) return false;
+// выполняем действие
     return true;
 }
 
 short Date::daysInMonth(short month, short year) {
+// выполняем действие
     switch (month) {
     case 4:  case 6:  case 9:  case 11: return 30;
     case 2:  return isLeapYear(year) ? 29 : 28;
     default: return 31;
+// выполняем действие
     } // switch
 }
 

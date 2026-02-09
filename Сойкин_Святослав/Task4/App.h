@@ -1,3 +1,5 @@
+#// ����: Task4/App.h
+#// ��������: ��������� ��������� ���������� Task4
 #pragma once
 #include "pch.h"
 #include "Payers.h"

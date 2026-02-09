@@ -1,13 +1,15 @@
+#// Р¤Р°Р№Р»: Task4/Date.h
+#// Р”РµР№СЃС‚РІРёРµ: РѕР±СЉСЏРІР»СЏРµРј С‚РёРїС‹ Рё С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РґР°С‚РѕР№
 #pragma once
 #include "pch.h"
 #include "Object.h"
 
-// Класс, описывающий дату: день, месяц, год. 
+// пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ. 
 class Date : public Object
 {
-    short day_;   // день
-    short month_; // месяц
-    short year_;  // год
+    short day_;   // пїЅпїЅпїЅпїЅ
+    short month_; // пїЅпїЅпїЅпїЅпїЅ
+    short year_;  // пїЅпїЅпїЅ
 
     static bool  dateValid(short day, short month, short year);
     static short daysInMonth(short month, short year);
@@ -17,8 +19,9 @@ class Date : public Object
     void toGrigorian(int julianDays);
 
 public:
-    // ансамбль конструкторов
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     Date() : day_(1), month_(1), year_(1970) {}
+// выполняем действие
     Date(short day, short month, short year) {
         setDate(day, month, year);
     } // Date
@@ -26,18 +29,20 @@ public:
     Date(const Date& date) = default;
     virtual ~Date() = default;
 
-    // геттеры и сеттер
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     short getDay()   const { return day_; }
+// получаем
     short getMonth() const { return month_; }
+// получаем
     short getYear()  const { return year_; }
 
     void setDate(short day, short month, short year);
 
-    // реализация виртуального метода
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
     virtual string toString() const override;
 
-    // перегруженные оператор
-    // Операции <, == для добавления в map, multimap, set, multiset 
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ <, == пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ map, multimap, set, multiset 
     bool operator <(const Date& date) const;
     bool operator==(const Date& date) const;
 

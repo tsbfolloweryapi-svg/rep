@@ -1,10 +1,13 @@
-// Утилиты и вспомогательные функции
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+#// Р¤Р°Р№Р»: Task3/Utils.cpp
+#// Р”РµР№СЃС‚РІРёРµ: РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ СѓС‚РёР»РёС‚С‹ РґР»СЏ Task3
 #include "pch.h"
 #include "Utils.h"
 #include "Colors.h"
 #include "Palette.h"
 
-// Внутренний дескриптор консоли
+// получаем
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 static HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
 
 void init(const wstring &title) {
@@ -17,9 +20,10 @@ void init(const wstring &title) {
 	setColor(mainColor);
 	cls();
 } // init
+// получаем
 
 
-// Получение кода нажатой клавиши
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 int getKey(const string &message) {
 	cout << message;
 	int key = _getch();
@@ -27,80 +31,88 @@ int getKey(const string &message) {
 
 	return key;
 } // getKey
+// получаем
 
 
-// Случайное целое число в диапазоне [low, high]
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [low, high]
 int getRand(int low, int high) {
 	return low + rand() % (high - low + 1);
 } // getRand
+// получаем
 
 
-// Случайное число (double) в диапазоне [low, high]
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (double) пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [low, high]
 double getRand(double low, double high) {
 	return low + (high - low) * rand() / RAND_MAX;
 } // getRand
+// получаем
 
 
-// Случайное число (float) в диапазоне [low, high]
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (float) пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [low, high]
 float getRand(float low, float high) {
 	return low + (high - low) * rand() / RAND_MAX;
 } // getRand
+// получаем
 
 
-// Случайный символ в диапазоне [low, high]
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [low, high]
 char getRand(char low, char high) {
 	return (char)getRand((int)low, (int)high);
 } // getRand
 
+// устанавливаем
 
-// Установить цвет текста в консоли
-// Использует внутренний дескриптор h
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ h
 void setColor(short color) {
 	SetConsoleTextAttribute(h, color);
 } // setColor
+// получаем
 
 
-// Ввод целого числа с проверкой формата
+// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 int getInt() {
 	int value;
 	while(true) {
-		// Просим ввести число
+		// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 		cout << "? ";
 		cin >> value;
 
-		// Если ввод корректен — выходим
+		// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 		if (!cin.fail()) break;
 
-		// Иначе — очищаем состояние и пропускаем остаток строки
+		// пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		cin.clear();
 		cin.ignore(cin.rdbuf()->in_avail(), '\n');
 	} // while
 
 	return value;
 } // getInt
+// выполняем действие
 
 
-// Проверка формата ввода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void checkInputFormat(istream& is) {
-	// Если поток в ошибочном состоянии
+	// пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	if (is.fail()) {
-		// очищаем состояние и пропускаем оставшуюся часть строки
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		is.clear();
 		is.ignore(is.rdbuf()->in_avail(), '\n');
 
-		// выбрасываем исключение с текстом на русском
-		throw exception("Ошибка ввода");
+		// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+		throw exception("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 	} // if	
 } // checkInputFormat
+// выводим
 
 
-// Показать сообщение в навигационной строке
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void showNavBarMessage(short hintColor, const string &message) {
 	setColor(hintColor);
 
 	gotoXY(0, 0);
 
-	// Отобразить сообщение в первой строке консоли
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	const COORD conSize = getConsoleSize();
 	cout << setw(conSize.X) << left << message << right;
 	setColor(mainColor);
@@ -108,19 +120,21 @@ void showNavBarMessage(short hintColor, const string &message) {
 	gotoXY(0, 4);
 } // showNavBarMessage
 
+// выводим
 
-// Показать сообщение в навигационной строке с подсветкой части текста
-// Часть текста, заключённая в символы '~', будет окрашена в acctColor
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ '~', пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ acctColor
 void showNavBarMessage(short hintColor, short acctColor, const string &message) {
 	setColor(hintColor);
 	gotoXY(0, 0);
 
 	const COORD conSize = getConsoleSize();
 
-	// Вывод с возможностью смены цвета в пределах одной строки
+	// пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	bool acctFlag = false;
 	int len = 0;
 	for (int i = 0; message[i] != 0; i++) {
+// выполняем действие
 		if (message[i] == '~') { 
 			setColor(!acctFlag?acctColor:hintColor);
 			acctFlag = !acctFlag;
@@ -131,60 +145,64 @@ void showNavBarMessage(short hintColor, short acctColor, const string &message) 
 		++len;
 	} // for i 
 
-	// Заполнить оставшуюся часть строки пробелами
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	cout << setw(conSize.X - len - 1) << " ";
 	setColor(mainColor);
 
 	gotoXY(0, 4);
 } // showNavBarMessage
+// выводим
 
 
-// Показать экран "В разработке"
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ "пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ"
 void showUnderConstruction(short width, short mainColor, short infoColor) {
 	ostringstream oss;
 	oss << "\n\n\n\n" << left
 		<< "\t" << setw(width) << " " << "\n"
-		<< "\t" << setw(width) << "    [В разработке]" << "\n"
-		<< "\t" << setw(width) << "    Раздел в разработке" << "\n"
+		<< "\t" << setw(width) << "    [пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ]" << "\n"
+		<< "\t" << setw(width) << "    пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << "\n"
 		<< "\t" << setw(width) << " " << "\n"
-		<< "\t" << setw(width) << "    Здесь пока нет содержимого для отображения..." << "\n"
+		<< "\t" << setw(width) << "    пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ..." << "\n"
 		<< "\t" << setw(width) << " " << "\n"
 		<< "\t" << setw(width) << " " << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n" << right;
 	showMessage(oss.str(), infoColor, mainColor);
 } // showUnderConstruction
+// выводим
 
 
-// Показать сообщение
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void showMessage(const string &msg, short msgColor, short mainColor) {
 	setColor(msgColor);
 	cout << left << msg << right;
 	setColor(mainColor);
 } // showMessage
 
+// выводим
 
-// Показать поле ввода
-// Выводит подсказку `prompt`, рисует поле шириной `n` и устанавливает курсор внутри
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ `prompt`, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ `n` пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void showInputLine(const string &prompt, short n, short color) {
-	// Вывести подсказку
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	cout << prompt;               
     
 	COORD pos;
 	getXY(&pos);
 
-	// Отрисовать поле ввода
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 	setColor(color);              
 	cout << setw(n) << "  ";
 
-	// Установить курсор внутри поля (смещение +1)
+	// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ +1)
 	gotoXY(pos.X + 1, pos.Y);
 } // showInputLine
 
 
 // ---------------------------------------------------------------------------------
 #pragma region WinAPI_helpers
-// Управление видимостью курсора
-// mode: true  - показать курсор
-//       false - скрыть курсор
+// выводим
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+// mode: true  - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+//       false - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void showCursor(bool mode) {
 	CONSOLE_CURSOR_INFO info;
 
@@ -193,9 +211,10 @@ void showCursor(bool mode) {
 	info.bVisible = mode;
 	SetConsoleCursorInfo(h, &info);
 } // void showCursor
+// выполняем действие
 
 
-// Проверить видимость курсора: true - видим, false - скрыт
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: true - пїЅпїЅпїЅпїЅпїЅ, false - пїЅпїЅпїЅпїЅпїЅ
 bool isCursor() {
 	CONSOLE_CURSOR_INFO info;
 
@@ -203,15 +222,17 @@ bool isCursor() {
 
 	return info.bVisible;
 } // isCursor
+// выполняем действие
 
 
-// Перемещает курсор в позицию (x,y)
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (x,y)
 void gotoXY(short x, short y) {
 	SetConsoleCursorPosition(h, COORD{ x, y });
 } // gotoXY
+// получаем
 
 
-// Записать текущую позицию курсора в `position`
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ `position`
 void getXY(COORD* position) {
 	CONSOLE_SCREEN_BUFFER_INFO cbuf;
 	GetConsoleScreenBufferInfo(h, &cbuf);
@@ -220,10 +241,11 @@ void getXY(COORD* position) {
 	position->Y = cbuf.dwCursorPosition.Y;
 } // getXY
 
-// TODO: реализовать дополнительные утилиты по необходимости
+// TODO: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+// очищаем экран
 
 
-// Очистить экран
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void cls() {
 	COORD coordScreen = { 0, 0 };
 	DWORD cCharsWritten;
@@ -243,14 +265,16 @@ void cls() {
 
 	SetConsoleCursorPosition(h, coordScreen);
 } // cls
+// получаем
 
 
-// Размер консольного буфера
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 COORD getConsoleSize() {
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
 	GetConsoleScreenBufferInfo(h, &csbi);
 
 	return csbi.dwSize;
+// выводим
 } // getConsoleSize
 
 // Convert UTF-8 to CP1251 and print to cout
@@ -272,30 +296,34 @@ void printCp1251(const string& utf8) {
 
 
 #pragma region stream_manipulators
-// Потоковые манипуляторы и вспомогательные операторы
+// очищаем экран
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
-// Очистка экрана: cout << cls;
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: cout << cls;
 ostream& cls(ostream& os) {
 	cls();
 	return os;
 } // cls
+// очищаем экран
 
 
-// Очистка экрана (ввод): cin >> cls;
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ): cin >> cls;
 istream& cls(istream& is) {
 	cls();
 	return is;
 } // cls
+// выполняем действие
 
 
-// Табуляция: cout << tab;
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: cout << tab;
 ostream& tab(ostream& os) {
 	os << "\t";
 	return os;
 } // tab
+// выполняем действие
 
 
-// Включить курсор в потоке: cout << cursor
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: cout << cursor
 ostream& cursor(ostream& os) {
 	CONSOLE_CURSOR_INFO info;
 	GetConsoleCursorInfo(h, &info);
@@ -305,9 +333,10 @@ ostream& cursor(ostream& os) {
 
 	return os;
 } // cursor
+// выполняем действие
 
 
-// Включить курсор для ввода: cin >> cursor
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: cin >> cursor
 istream& cursor(istream& is) {
 	CONSOLE_CURSOR_INFO info;
 	GetConsoleCursorInfo(h, &info);
@@ -317,9 +346,10 @@ istream& cursor(istream& is) {
 
 	return is;
 } // cursor
+// выполняем действие
 
 
-// Отключить курсор: cout << nocursor
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: cout << nocursor
 ostream& nocursor(ostream& os) {
 	CONSOLE_CURSOR_INFO info;
 	GetConsoleCursorInfo(h, &info);
@@ -329,9 +359,10 @@ ostream& nocursor(ostream& os) {
 
 	return os;
 } // nocursor
+// выполняем действие
 
 
-// Отключить курсор для ввода: cin >> nocursor
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: cin >> nocursor
 istream& nocursor(istream& is) {
 	CONSOLE_CURSOR_INFO info;
 	GetConsoleCursorInfo(h, &info);
@@ -343,7 +374,7 @@ istream& nocursor(istream& is) {
 } // nocursor
 
 
-// Печать нескольких переводов строки: cout << endlm(n)
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: cout << endlm(n)
 ostream& operator<<(ostream& os, const endlm& obj) {
 	for (int i = 0; i < obj.n_; ++i) {
 		os << "\n";
@@ -352,35 +383,36 @@ ostream& operator<<(ostream& os, const endlm& obj) {
 } // operator<<
 
 
-// Установить цвет в потоке: cout << color(c)
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: cout << color(c)
 ostream& operator<<(ostream& os, const color& obj) {
 	SetConsoleTextAttribute(h, obj.color_);
 	return os;
 } // operator<<
 
 
-// Установить цвет из потока: cin >> color(c)
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: cin >> color(c)
 istream& operator>>(istream& is, const color& obj) {
 	SetConsoleTextAttribute(h, obj.color_);
 	return is;
 } // operator>>
 
 
-// Переместить курсор через поток: cout << pos(x,y)
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: cout << pos(x,y)
 ostream& operator<<(ostream& os, const pos& obj) {
 	SetConsoleCursorPosition(h, { obj.x_, obj.y_ });
 	return os;
 } // operator<<
 
-// Переместить курсор через ввод: cin >> pos(x,y)
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: cin >> pos(x,y)
 istream& operator>>(istream& is, const pos& obj) {
 	SetConsoleCursorPosition(h, { obj.x_, obj.y_ });
 	return is;
 } // operator>>
 #pragma endregion
+// получаем
 
 
-// Текущий год
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ
 int getCurrentYear() {
 	time_t t = time(nullptr);
 	struct tm tm = *localtime(&t);

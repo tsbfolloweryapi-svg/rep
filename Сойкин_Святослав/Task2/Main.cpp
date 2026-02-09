@@ -2,10 +2,13 @@
 #include "Utils.h"
 #include "MenuItem.h"
 #include "Menu.h"
-#include "App.h"
+#// Р¤Р°Р№Р»: Task2/Main.cpp
+// точка входа
+#// Р”РµР№СЃС‚РІРёРµ: С‚РѕС‡РєР° РІС…РѕРґР°, СЃРѕР·РґР°С‘Рј Рё Р·Р°РїСѓСЃРєР°РµРј РїСЂРёР»РѕР¶РµРЅРёРµ
+#include "pch.h"
 
 int main() {
-    init(L"Task2: Обработка текста");
+    init(L"Task2: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 
     App app;
 
@@ -20,22 +23,24 @@ int main() {
     };
 
     vector<MenuItem> items = {
-        MenuItem(CMD_FREQ_WORDS, "Частотный словарь слов"),
-        MenuItem(CMD_FREQ_LETTERS, "Частотный словарь букв"),
-        MenuItem(CMD_SWAP_LINES, "Поменять строки местами"),
-        MenuItem(CMD_CAPITALIZE, "Capitalize слова"),
-        MenuItem(CMD_ORDER_BY_LEN, "Упорядочить по длине"),
-        MenuItem(CMD_ORDER_WORDS_IN_LINES, "Упорядочить слова в строках"),
-        MenuItem(Menu::CMD_QUIT, "Выход")
+        MenuItem(CMD_FREQ_WORDS, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ"),
+        MenuItem(CMD_FREQ_LETTERS, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ"),
+        MenuItem(CMD_SWAP_LINES, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"),
+        MenuItem(CMD_CAPITALIZE, "Capitalize пїЅпїЅпїЅпїЅпїЅ"),
+        MenuItem(CMD_ORDER_BY_LEN, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ"),
+        MenuItem(CMD_ORDER_WORDS_IN_LINES, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ"),
+        MenuItem(Menu::CMD_QUIT, "пїЅпїЅпїЅпїЅпїЅ")
     };
 
     Menu menu(COORD{ 5, 5 }, items, mainColor, infoColor);
+// выполняем действие
 
     while (true) {
         try {
             cls();
-            showNavBarMessage(hintColor, "Task2: Обработка текста");
+            showNavBarMessage(hintColor, "Task2: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 
+// выполняем действие
             int cmd = menu.navigate();
             if (cmd == Menu::CMD_QUIT) break;
 
@@ -45,6 +50,7 @@ int main() {
             case CMD_SWAP_LINES: app.doSwapLines(); break;
             case CMD_CAPITALIZE: app.doWordsCapitalize(); break;
             case CMD_ORDER_BY_LEN: app.doOrderByLen(); break;
+// выполняем действие
             case CMD_ORDER_WORDS_IN_LINES: app.doOrderWordsInLines(); break;
             }
         }
@@ -53,7 +59,7 @@ int main() {
             cout << color(errColor)
                 << pos(x, y) << setw(W) << " "
                 << pos(x, y + 1) << setw(W) << " "
-                << pos(x, y + 2) << setw(W) << left << "    [Ошибка]"
+                << pos(x, y + 2) << setw(W) << left << "    [пїЅпїЅпїЅпїЅпїЅпїЅ]"
                 << pos(x, y + 3) << setw(W) << " "
                 << pos(x, y + 4) << setw(W) << ("    "s + ex.what())
                 << pos(x, y + 5) << setw(W) << " "

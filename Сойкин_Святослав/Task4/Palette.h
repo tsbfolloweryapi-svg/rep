@@ -1,16 +1,18 @@
+#// Р¤Р°Р№Р»: Task4/Palette.h
+#// Р”РµР№СЃС‚РІРёРµ: РѕР±СЉСЏРІР»СЏРµРј РїР°Р»РёС‚СЂСѓ С†РІРµС‚РѕРІ РґР»СЏ Task4
 #pragma once
 #include "Colors.h"
 
-// Описание палитры: смысловые названия цветов
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 enum Palette: int {
-    mainColor = GRAY_ON_BLACK,     // Основной текст
-    infoColor = BLACK_ON_LTCYAN,   // Информационные сообщения
-    acctColor = RED_ON_WHITE,      // Акцент/ошибка
-    hintColor = BLACK_ON_WHITE,    // Подсказки
-    sumColor  = BLUE_ON_WHITE,     // Суммы
-    errColor  = WHITE_ON_RED,      // Ошибки
-    resColor  = LTCYAN_ON_BLACK,   // Результаты
-    arrColor  = LTCYAN_ON_BLACK,   // Табличные элементы
-    headerColor = WHITE_ON_BLACK   // Заголовки
+    mainColor = GRAY_ON_BLACK,     // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    infoColor = BLACK_ON_LTCYAN,   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    acctColor = RED_ON_WHITE,      // пїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅ
+    hintColor = BLACK_ON_WHITE,    // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    sumColor  = BLUE_ON_WHITE,     // пїЅпїЅпїЅпїЅпїЅ
+    errColor  = WHITE_ON_RED,      // пїЅпїЅпїЅпїЅпїЅпїЅ
+    resColor  = LTCYAN_ON_BLACK,   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    arrColor  = LTCYAN_ON_BLACK,   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    headerColor = WHITE_ON_BLACK   // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
 };

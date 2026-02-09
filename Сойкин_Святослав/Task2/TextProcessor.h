@@ -1,3 +1,5 @@
+#// Файл: Task2/TextProcessor.h
+#// Действие: объявляем функции для обработки текста
 #pragma once
 #include "pch.h"
 

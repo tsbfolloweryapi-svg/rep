@@ -1,3 +1,5 @@
+#// Файл: Task2/App.h
+#// Действие: объявляем интерфейс приложения
 #pragma once
 #include "pch.h"
 #include "TextProcessor.h"

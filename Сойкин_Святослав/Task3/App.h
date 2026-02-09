@@ -1,3 +1,5 @@
+#// Файл: Task3/App.h
+#// Действие: объявляем интерфейс приложения Task3
 #pragma once
 #include "pch.h"
 #include "Requests.h"
@@ -9,7 +11,9 @@ private:
 
 public:
     App();
+// получаем
     const string& getBinFile() const { return binFile_; }
+// получаем
     const list<Request>& getRequests() const { return requests_.getList(); }
 
     void doAddRequest();

@@ -88,6 +88,7 @@ class endlm
     int n_;
 
 public:
+// выполняем действие
     endlm(int n) : n_(n) {}
     friend ostream& operator<<(ostream& os, const endlm& obj);
 };
@@ -98,6 +99,7 @@ class color
     short color_;
 
 public:
+// выполняем действие
     color(short color) : color_(color) {}
     friend ostream& operator<<(ostream& os, const color& obj);
     friend istream& operator>>(istream& is, const color& obj);
@@ -110,6 +112,7 @@ class pos
     short y_;
 
 public:
+// выполняем действие
     pos(short x, short y) : x_(x), y_(y) {}
     friend ostream& operator<<(ostream& os, const pos& obj);
     friend istream& operator>>(istream& is, const pos& obj);
@@ -118,7 +121,9 @@ public:
 #pragma endregion
 
 
+// выполняем действие
 inline bool eq(double d1, double d2) { return abs(d1 - d2) <= 1e-6; }
+// выполняем действие
 inline bool eq(float d1, float d2) { return abs(d1 - d2) <= 1e-6; }
 
 int getCurrentYear();
