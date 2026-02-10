@@ -1,37 +1,79 @@
 #include "Request.h"
 #include "Utils.h"
-
-// Инициализация/Точка входа
+// --- Request factory -----------------------------------------------------
+// Build a synthetic `Request` with randomized fields used for initial
+// population of the collection. The function intentionally constructs
+// human-readable strings and returns a `Request` with `std::string`
+// members populated.
 Request Request::createFactory(int id) {
     Request r;
+    // Set numeric identifier
     r.id = id;
-    string dest = "Пункт назначения " + to_string(getRand(1, 15));
-    string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
-    string pass = "Иванов " + to_string(getRand(1, 30)) + " П.О.";
+
+    // Destination, flight code and passenger name are created as strings
+    // (in-memory we use std::string; binary serialization will handle
+    // marshaling to fixed-length fields when writing to disk).
+    r.destination = "Р“РѕСЂРѕРґ " + to_string(getRand(1, 15));
+    r.flightNum = "PO-" + to_string(getRand(1000, 9999)) + "K";
+    r.passenger = "РџР°СЃСЃР°Р¶РёСЂ " + to_string(getRand(1, 30)) + " Рџ.Рћ.";
+
+    // Random date within a reasonable range
     Date d;
     d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
-
-    strncpy(r.destination, dest.c_str(), 30); r.destination[30] = '\0';
-    strncpy(r.flightNum, flight.c_str(), 15); r.flightNum[15] = '\0';
-    strncpy(r.passenger, pass.c_str(), 30); r.passenger[30] = '\0';
     r.date = d;
+
     return r;
 }
 
-// Обработка/Запросы
+
+// --- Textual representation ---------------------------------------------
+// Return human-readable description of the request. Useful for console
+// output and debugging.
 string Request::toString() const {
     ostringstream oss;
-    oss << "ID: " << id << ", Пункт назначения: " << destination << ", Рейс: " << flightNum
-        << ", Пассажир: " << passenger << ", Дата: " << date.toString();
+    oss << "ID: " << id
+        << ", destination: " << destination
+        << ", flight: " << flightNum
+        << ", passenger: " << passenger
+        << ", date: " << date.toString();
     return oss.str();
 }
 
-// Работа с файлом
+
+// --- Binary serialization (fixed-size record) ---------------------------
+// We maintain the same on-disk fixed-size layout as before for
+// compatibility with other code that expects constant record sizes.
+// Layout (bytes): int id; char destination[31]; char flightNum[16];
+// char passenger[31]; short day; short month; short year;
+//
+// `writeBinary` marshals `std::string` fields into temporary
+// fixed-size buffers (truncating or padding as necessary) and writes
+// them into the stream. `readBinary` reads fixed-sized blocks and
+// constructs std::string values from them.
 void Request::writeBinary(ostream& os) const {
+    // Write id (binary)
     os.write(reinterpret_cast<const char*>(&id), sizeof(id));
-    os.write(destination, 31);
-    os.write(flightNum, 16);
-    os.write(passenger, 31);
+
+    // Destination: fixed 31 bytes on disk. Copy up to 30 characters
+    // and ensure a terminating zero in the buffer written.
+    char destBuf[31] = {0};
+    strncpy(destBuf, destination.c_str(), 30);
+    destBuf[30] = '\0';
+    os.write(destBuf, 31);
+
+    // Flight number: fixed 16 bytes
+    char flightBuf[16] = {0};
+    strncpy(flightBuf, flightNum.c_str(), 15);
+    flightBuf[15] = '\0';
+    os.write(flightBuf, 16);
+
+    // Passenger: fixed 31 bytes
+    char passBuf[31] = {0};
+    strncpy(passBuf, passenger.c_str(), 30);
+    passBuf[30] = '\0';
+    os.write(passBuf, 31);
+
+    // Date components as shorts
     short day = date.getDay();
     short month = date.getMonth();
     short year = date.getYear();
@@ -40,21 +82,32 @@ void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&year), sizeof(year));
 }
 
-// Работа с файлом
+
+// Read a fixed-size record from stream and populate `out`.
+// Returns false on read failure (EOF, truncated record, etc.).
 bool Request::readBinary(istream& is, Request& out) {
     if (!is.read(reinterpret_cast<char*>(&out.id), sizeof(out.id))) return false;
-    if (!is.read(out.destination, 31)) return false;
-    if (!is.read(out.flightNum, 16)) return false;
-    if (!is.read(out.passenger, 31)) return false;
+
+    char destBuf[31];
+    if (!is.read(destBuf, 31)) return false;
+    char flightBuf[16];
+    if (!is.read(flightBuf, 16)) return false;
+    char passBuf[31];
+    if (!is.read(passBuf, 31)) return false;
+
     short day, month, year;
     if (!is.read(reinterpret_cast<char*>(&day), sizeof(day))) return false;
     if (!is.read(reinterpret_cast<char*>(&month), sizeof(month))) return false;
     if (!is.read(reinterpret_cast<char*>(&year), sizeof(year))) return false;
 
-    // Ensure null-termination (in case source used full-length strings)
-    out.destination[30] = '\0';
-    out.flightNum[15] = '\0';
-    out.passenger[30] = '\0';
+    // Ensure buffers are null-terminated then assign to std::string fields.
+    destBuf[30] = '\0';
+    flightBuf[15] = '\0';
+    passBuf[30] = '\0';
+
+    out.destination = string(destBuf);
+    out.flightNum = string(flightBuf);
+    out.passenger = string(passBuf);
 
     out.date.setDate(day, month, year);
     return true;
