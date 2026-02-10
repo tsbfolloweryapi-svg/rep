@@ -1,4 +1,4 @@
-п»ї#include "pch.h"
+#include "pch.h"
 #include "Utils.h"
 #include "App.h"
 #include "MenuItem.h"
@@ -8,15 +8,15 @@
 
 int main()
 {
-	// РЅР°СЃС‚СЂРѕР№РєР° РІС‹РІРѕРґР° РІ РєРѕРЅСЃРѕР»СЊ
-	init(L"РћР±СЂР°Р±РѕС‚РєР° С‚РµРєСЃС‚Р° (string + STL)");
+	// настройка вывода в консоль
+	init(L"Обработка текста (string + STL)");
 
 	ostringstream oss;
 
-	// С€РёСЂРёРЅР° РїР°РЅРµР»Рё РІС‹РІРѕРґР° СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРµ
+	// ширина панели вывода сообщения об ошибке
 	constexpr int width = 64;
 
-	// РєРѕРґС‹ РєРѕРјР°РЅРґ
+	// коды команд
 	enum Commands : short {
 		CMD_WORD_FREQ = 1001,
 		CMD_LETTER_FREQ,
@@ -26,16 +26,16 @@ int main()
 		CMD_ORDERLINESS
 	};
 
-	// РєРѕР»Р»РµРєС†РёСЏ РїСѓРЅРєС‚РѕРІ РјРµРЅСЋ
+	// коллекция пунктов меню
 	vector<MenuItem> items = {
-		MenuItem(CMD_WORD_FREQ,    "Р§Р°СЃС‚РѕС‚РЅС‹Р№ СЃР»РѕРІР°СЂСЊ СЃР»РѕРІ С‚РµРєСЃС‚Р° (map<string,double>)"),
-		MenuItem(CMD_LETTER_FREQ,  "Р§Р°СЃС‚РѕС‚РЅС‹Р№ СЃР»РѕРІР°СЂСЊ Р±СѓРєРІ С‚РµРєСЃС‚Р° (map<char,double>, СЂРµРіРёСЃС‚СЂРѕ-РЅРµР·Р°РІРёСЃРёРјРѕ)"),
-		MenuItem(CMD_SWAP_ROWS,    "РџРѕРјРµРЅСЏС‚СЊ РјРµСЃС‚Р°РјРё РєР°Р¶РґС‹Рµ РґРІРµ СЃРѕСЃРµРґРЅРёРµ СЃС‚СЂРѕРєРё -> swap.txt"),
-		MenuItem(CMD_CAPITALIZE,   "РЎРґРµР»Р°С‚СЊ СЃР»РѕРІР°: РџРµСЂРІР°СЏ Р‘СѓРєРІР° Р—Р°РіР»Р°РІРЅР°СЏ -> capitalize.txt"),
-		MenuItem(CMD_ORDER_BY_LEN, "РЈРїРѕСЂСЏРґРѕС‡РёС‚СЊ СЃС‚СЂРѕРєРё РїРѕ РґР»РёРЅРµ -> orderByLen.txt"),
-		MenuItem(CMD_ORDERLINESS,  "Р’ РєР°Р¶РґРѕР№ СЃС‚СЂРѕРєРµ СЃР»РѕРІР° РїРѕ Р°Р»С„Р°РІРёС‚Сѓ, 1 РїСЂРѕР±РµР» -> orderliness.txt"),
+		MenuItem(CMD_WORD_FREQ,    "Частотный словарь слов текста (map<string,double>)"),
+		MenuItem(CMD_LETTER_FREQ,  "Частотный словарь букв текста (map<char,double>, регистро-независимо)"),
+		MenuItem(CMD_SWAP_ROWS,    "Поменять местами каждые две соседние строки -> swap.txt"),
+		MenuItem(CMD_CAPITALIZE,   "Сделать слова: Первая Буква Заглавная -> capitalize.txt"),
+		MenuItem(CMD_ORDER_BY_LEN, "Упорядочить строки по длине -> orderByLen.txt"),
+		MenuItem(CMD_ORDERLINESS,  "В каждой строке слова по алфавиту, 1 пробел -> orderliness.txt"),
 
-		MenuItem(Menu::CMD_QUIT, "Р’С‹С…РѕРґ. Р—Р°РІРµСЂС€РµРЅРёРµ РїСЂРёР»РѕР¶РµРЅРёСЏ")
+		MenuItem(Menu::CMD_QUIT, "Выход. Завершение приложения")
 	};
 
 	Menu mainMenu(COORD{ 5, 5 }, items, infoColor, hintColor);
@@ -49,7 +49,7 @@ int main()
 			} // if
 
 			cout << color(mainColor) << cls;
-			showNavBarMessage(hintColor, acctColor, "  РћР±СЂР°Р±РѕС‚РєР° С„Р°Р№Р»Р° test.txt  |  ~Esc~ ~F10~ Р’С‹С…РѕРґ");
+			showNavBarMessage(hintColor, acctColor, "  Обработка файла test.txt  |  ~Esc~ ~F10~ Выход");
 
 			int cmd = mainMenu.navigate();
 			cout << color(mainColor) << cls;
@@ -85,12 +85,12 @@ int main()
 		catch (FileException& ex) {
 			setColor(mainColor);
 			cls();
-			showNavBarMessage(hintColor, "  РћС€РёР±РєР° РїСЂРёР»РѕР¶РµРЅРёСЏ, РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ...");
+			showNavBarMessage(hintColor, "  Ошибка приложения, нажмите любую клавишу для продолжения...");
 
 			oss.str("");
 			oss << endlm(4) << left
 				<< "\t" << setw(width) << " " << "\n"
-				<< "\t" << setw(width) << "    [РћС€РёР±РєР°]" << "\n"
+				<< "\t" << setw(width) << "    [Ошибка]" << "\n"
 				<< "\t    " << left << setw(width - 4) << ex.what() << right << "\n"
 				<< "\t    " << left << setw(width - 4) << ex.getFileName() << right << "\n"
 				<< "\t" << setw(width) << " " << "\n"
@@ -102,12 +102,12 @@ int main()
 
 		catch (exception& ex) {
 			cout << color(mainColor) << cls;
-			showNavBarMessage(hintColor, "  РћС€РёР±РєР° РІ РїСЂРёР»РѕР¶РµРЅРёРё, РЅР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ");
+			showNavBarMessage(hintColor, "  Ошибка в приложении, нажмите любую клавишу для продолжения");
 
 			oss.str("");
 			oss << endlm(4) << left
 				<< "\t" << setw(width) << " " << "\n"
-				<< "\t" << setw(width) << "    [РћС€РёР±РєР°]" << "\n"
+				<< "\t" << setw(width) << "    [Ошибка]" << "\n"
 				<< "\t    " << left << setw(width - 4) << ex.what() << right << "\n"
 				<< "\t" << setw(width) << " " << "\n"
 				<< "\t" << setw(width) << " " << "\n"
@@ -116,7 +116,7 @@ int main()
 			showMessage(oss.str(), errColor, mainColor);
 		} // try-catch
 
-		getKey("\tРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ...");
+		getKey("\tНажмите любую клавишу для продолжения...");
 	} // while
 
 	delete app;

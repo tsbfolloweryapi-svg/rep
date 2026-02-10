@@ -22,20 +22,26 @@ float App::readFloatFromCin(const string &prompt) {
     return value;
 }
 
-// Binary save/load are provided by VectorProcess; App delegates to it directly in run().
+void App::saveToBinary() const {
+    vectorProcess_.saveToBinary(binFile_);
+}
+
+void App::loadFromBinary() {
+    vectorProcess_.loadFromBinary(binFile_);
+}
 
 void App::run() {
     init();
-    // РЎРѕС…СЂР°РЅСЏРµРј РёСЃС…РѕРґРЅС‹Р№ РІРµРєС‚РѕСЂ РІ Р±РёРЅР°СЂРЅС‹Р№ С„Р°Р№Р» РїРµСЂРµРґ РѕР±СЂР°Р±РѕС‚РєР°РјРё
-    vectorProcess_.saveToBinary(binFile_);
+    // Сохраняем исходный вектор в бинарный файл перед обработками
+    saveToBinary();
 
-    // РЎР»СѓС‡Р°Р№РЅС‹Р№ РёРЅС‚РµСЂРІР°Р» [a,b]
+    // Автоматически генерируем интервал [a,b]
     float a = getRand(-50.0f, 50.0f);
     float b = a + getRand(0.0f, 100.0f);
     if (a > b) swap(a, b);
-    cout << "РЎР»СѓС‡Р°Р№РЅС‹Р№ РёРЅС‚РµСЂРІР°Р»: a=" << a << " b=" << b << "\n";
+    cout << "Автогенерированный интервал: a=" << a << " b=" << b << "\n";
 
-    // Р’С‹РїРѕР»РЅСЏРµРј С€Р°РіРё РѕР±СЂР°Р±РѕС‚РєРё РІРµРєС‚РѕСЂР°
+    // Выполнение шагов по очереди
     step_countNegative();
     step_countOutsideInterval(a, b);
     step_sumBeforeFirstMin();
@@ -43,63 +49,63 @@ void App::run() {
     step_selectNegatives();
     step_selectOutsideInterval(a, b);
     step_sortDescending();
-    // Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РёСЃС…РѕРґРЅС‹Р№ РІРµРєС‚РѕСЂ РёР· С„Р°Р№Р»Р° РїРµСЂРµРґ СЃР»РµРґСѓСЋС‰РёРјРё РѕРїРµСЂР°С†РёСЏРјРё
-    vectorProcess_.loadFromBinary(binFile_);
+    // Восстанавливаем исходный вектор из файла перед следующими операциями
+    loadFromBinary();
     step_sortByAbsAscending();
-    vectorProcess_.loadFromBinary(binFile_);
+    loadFromBinary();
     step_moveOutsideIntervalToEnd(a, b);
 
-    // Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РІРµРєС‚РѕСЂ РёР· Р±РёРЅР°СЂРЅРѕРіРѕ С„Р°Р№Р»Р° РїРѕСЃР»Рµ РІСЃРµС… РѕР±СЂР°Р±РѕС‚РѕРє
-    vectorProcess_.loadFromBinary(binFile_);
-    cout << "Р Р°Р·РјРµСЂ РІРµРєС‚РѕСЂР° РїРѕСЃР»Рµ РІРѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёР№, count=" << vectorProcess_.data().size() << "\n";
+    // Восстанавливаем вектор из бинарного файла после всех обработок
+    loadFromBinary();
+    cout << "Вектор восстановлен из бинарного файла, размер=" << vectorProcess_.data().size() << "\n";
 }
 
 void App::step_countNegative() {
     const auto negCount = vectorProcess_.numberNegatives();
-    cout << "1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << negCount << "\n";
+    cout << "1) Количество отрицательных элементов: " << negCount << "\n";
 }
 
 void App::step_countOutsideInterval(float a, float b) {
     const auto notInInterval = vectorProcess_.numberNotInRange(a, b);
-    cout << "2) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ [a,b]: " << notInInterval << "\n";
+    cout << "2) Количество элементов вне [a,b]: " << notInInterval << "\n";
 }
 
 void App::step_sumBeforeFirstMin() {
     const auto sumBeforeMin = vectorProcess_.sumBeforeFirstMin();
-    cout << "3) пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " << sumBeforeMin << "\n";
+    cout << "3) Сумма перед первым минимальным элементом: " << sumBeforeMin << "\n";
 }
 
 void App::step_sumBetweenFirstMinAndFirstMax() {
     const auto sumBetween = vectorProcess_.sumBetweenFirstMinFirstMax();
-    cout << "4) пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ min пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ max: " << sumBetween << "\n";
+    cout << "4) Сумма между первым min и первым max: " << sumBetween << "\n";
 }
 
 void App::step_selectNegatives() {
     auto negatives = vectorProcess_.fihdNegatives();
-    cout << "5) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (count=" << negatives.size() << "):\n";
+    cout << "5) Отобранные отрицательные элементы (count=" << negatives.size() << "):\n";
     if (!negatives.empty()) printVectorVisual(negatives, string());
 }
 
 void App::step_selectOutsideInterval(float a, float b) {
     auto outside = vectorProcess_.fihdNotInRange(a, b);
-    cout << "6) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ [a,b] (count=" << outside.size() << "):\n";
+    cout << "6) Элементы вне [a,b] (count=" << outside.size() << "):\n";
     if (!outside.empty()) printVectorVisual(outside, string());
 }
 
 void App::step_sortDescending() {
     vectorProcess_.orderByDesc();
-    cout << "7) пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:\n";
+    cout << "7) Вектор после сортировки по убыванию:\n";
     printVectorVisual(vectorProcess_.data(), string());
 }
 
 void App::step_sortByAbsAscending() {
     vectorProcess_.orderByAbs();
-    cout << "8) пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ:\n";
+    cout << "8) Вектор после сортировки по возрастанию модулей:\n";
     printVectorVisual(vectorProcess_.data(), string());
 }
 
 void App::step_moveOutsideIntervalToEnd(float a, float b) {
     vectorProcess_.orderByNotInRangeLast(a, b);
-    cout << "9) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ [a,b] пїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅ-пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ):\n";
+    cout << "9) Перенос элементов вне [a,b] в конец (внутри-интервал в начале):\n";
     printVectorVisual(vectorProcess_.data(), string());
 }

@@ -19,6 +19,9 @@ class App {
 
     float readFloatFromCin(const string &prompt);
 
+    void saveToBinary() const;
+    void loadFromBinary();
+
 public:
     App();
     void run();
