@@ -4,9 +4,9 @@
 #include "Menu.h"
 #include "App.h"
 
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
 int main() {
-    init(L"Task2: РћР±СЂР°Р±РѕС‚РєР° С‚РµРєСЃС‚Р°");
+    init(L"Task2: Обработка текста");
 
     App app;
 
@@ -21,27 +21,27 @@ int main() {
     };
 
     vector<MenuItem> items = {
-        MenuItem(CMD_FREQ_WORDS, "Р§Р°СЃС‚РѕС‚РЅС‹Р№ СЃР»РѕРІР°СЂСЊ СЃР»РѕРІ"),
-        MenuItem(CMD_FREQ_LETTERS, "Р§Р°СЃС‚РѕС‚РЅС‹Р№ СЃР»РѕРІР°СЂСЊ Р±СѓРєРІ"),
-        MenuItem(CMD_SWAP_LINES, "РџРѕРјРµРЅСЏС‚СЊ СЃС‚СЂРѕРєРё РјРµСЃС‚Р°РјРё"),
-        MenuItem(CMD_CAPITALIZE, "Capitalize СЃР»РѕРІР°"),
-        MenuItem(CMD_ORDER_BY_LEN, "РЈРїРѕСЂСЏРґРѕС‡РёС‚СЊ РїРѕ РґР»РёРЅРµ"),
-        MenuItem(CMD_ORDER_WORDS_IN_LINES, "РЈРїРѕСЂСЏРґРѕС‡РёС‚СЊ СЃР»РѕРІР° РІ СЃС‚СЂРѕРєР°С…"),
-        MenuItem(Menu::CMD_QUIT, "Р’С‹С…РѕРґ")
+        MenuItem(CMD_FREQ_WORDS, "Частотный словарь слов"),
+        MenuItem(CMD_FREQ_LETTERS, "Частотный словарь букв"),
+        MenuItem(CMD_SWAP_LINES, "Поменять строки местами"),
+        MenuItem(CMD_CAPITALIZE, "Capitalize слова"),
+        MenuItem(CMD_ORDER_BY_LEN, "Упорядочить по длине"),
+        MenuItem(CMD_ORDER_WORDS_IN_LINES, "Упорядочить слова в строках"),
+        MenuItem(Menu::CMD_QUIT, "Выход")
     };
 
     Menu menu(COORD{ 5, 5 }, items, mainColor, infoColor);
 
-// Р’С‹РІРѕРґ/РћС‚РѕР±СЂР°Р¶РµРЅРёРµ
+// Вывод/Отображение
     while (true) {
         try {
             cls();
-            showNavBarMessage(hintColor, "Task2: РћР±СЂР°Р±РѕС‚РєР° С‚РµРєСЃС‚Р°");
+            showNavBarMessage(hintColor, "Task2: Обработка текста");
 
             int cmd = menu.navigate();
             if (cmd == Menu::CMD_QUIT) break;
 
-// РџРµСЂРµРјРµС‰РµРЅРёРµ/РўСЂР°РЅСЃС„РѕСЂРјР°С†РёСЏ
+// Перемещение/Трансформация
             switch (cmd) {
             case CMD_FREQ_WORDS: app.doFreqDictWords(); break;
             case CMD_FREQ_LETTERS: app.doFreqDictLetters(); break;
@@ -51,13 +51,13 @@ int main() {
             case CMD_ORDER_WORDS_IN_LINES: app.doOrderWordsInLines(); break;
             }
         }
-// Р‘Р»РѕРє
+// Блок
         catch (exception& ex) {
             int x = 12, y = 8;
             cout << color(errColor)
                 << pos(x, y) << setw(W) << " "
                 << pos(x, y + 1) << setw(W) << " "
-                << pos(x, y + 2) << setw(W) << left << "    [РћС€РёР±РєР°]"
+                << pos(x, y + 2) << setw(W) << left << "    [Ошибка]"
                 << pos(x, y + 3) << setw(W) << " "
                 << pos(x, y + 4) << setw(W) << ("    "s + ex.what())
                 << pos(x, y + 5) << setw(W) << " "

@@ -3,34 +3,34 @@
 #include <locale>
 #include <cctype>
 
-// РџРѕСЃС‚СЂРѕРёС‚СЊ С‡Р°СЃС‚РѕС‚РЅС‹Р№ СЃР»РѕРІР°СЂСЊ СЃР»РѕРІ РёР· С„Р°Р№Р»Р°
+// Построить частотный словарь слов из файла
 map<string, double> TextProcessor::makeWordsFrequencyDict(const string& fileName) {
     map<string, double> freqDict;
 
     fstream fs(fileName, ios::in);
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
     if (!fs.is_open()) {
-        throw exception(("TextProcessor: РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " + fileName).c_str());
+        throw exception(("TextProcessor: Не удалось открыть файл " + fileName).c_str());
     }
     fs.imbue(locale(".1251"));
 
     int wordsCounter = 0;
     string line;
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
     while (getline(fs, line)) {
         if (line.empty()) continue;
 
         vector<string> words = splitBySpace(line);
-// РџРѕРґСЃС‡С‘С‚/РђРіСЂРµРіР°С†РёСЏ
+// Подсчёт/Агрегация
         for (const auto& word : words) {
             freqDict[word] += 1.0;
         }
         wordsCounter += static_cast<int>(words.size());
     }
     fs.close();
-// РџРѕРґСЃС‡С‘С‚/РђРіСЂРµРіР°С†РёСЏ
+// Подсчёт/Агрегация
     if (wordsCounter > 0) {
-// РџРѕРґСЃС‡С‘С‚/РђРіСЂРµРіР°С†РёСЏ
+// Подсчёт/Агрегация
         for (auto& item : freqDict) {
             item.second /= wordsCounter;
         }
@@ -42,15 +42,15 @@ map<string, double> TextProcessor::makeLettersFrequencyDict(const string& fileNa
     map<string, double> freqDict;
 
     fstream fs(fileName, ios::in);
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
     if (!fs.is_open()) {
-        throw exception(("TextProcessor: РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " + fileName).c_str());
+        throw exception(("TextProcessor: Не удалось открыть файл " + fileName).c_str());
     }
     fs.imbue(locale(".1251"));
 
     string text;
     string line;
-// Р‘Р»РѕРє
+// Блок
     while (getline(fs, line)) {
         if (!text.empty()) text += ' ';
         text += line;
@@ -58,9 +58,9 @@ map<string, double> TextProcessor::makeLettersFrequencyDict(const string& fileNa
     fs.close();
 
     int lettersCounter = 0;
-// Р‘Р»РѕРє
+// Блок
     for (char c : text) {
-// РџРѕРґСЃС‡С‘С‚/РђРіСЂРµРіР°С†РёСЏ
+// Подсчёт/Агрегация
         if (isalpha(static_cast<unsigned char>(c))) {
             char lowerC = tolower(static_cast<unsigned char>(c));
             freqDict[string(1, lowerC)] += 1;
@@ -68,9 +68,9 @@ map<string, double> TextProcessor::makeLettersFrequencyDict(const string& fileNa
         }
     }
 
-// РџРѕРґСЃС‡С‘С‚/РђРіСЂРµРіР°С†РёСЏ
+// Подсчёт/Агрегация
     if (lettersCounter > 0) {
-// РџРѕРґСЃС‡С‘С‚/РђРіСЂРµРіР°С†РёСЏ
+// Подсчёт/Агрегация
         for (auto& item : freqDict) {
             item.second /= lettersCounter;
         }
@@ -79,12 +79,12 @@ map<string, double> TextProcessor::makeLettersFrequencyDict(const string& fileNa
 }
 
 // splitBySpace
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
 vector<string> TextProcessor::splitBySpace(const string& line) {
     vector<string> words;
     stringstream ss(line);
     string word;
-// Р‘Р»РѕРє
+// Блок
     while (ss >> word) {
         if (!word.empty()) words.emplace_back(word);
     }

@@ -2,11 +2,11 @@
 #include "Utils.h"
 #include <sstream>
 
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
 Payer Payer::createFactory(int id) {
     Payer p;
     p.setId(id);
-    p.setName("РђР±РѕРЅРµРЅС‚" + to_string(getRand(1, 20)));
+    p.setName("Абонент" + to_string(getRand(1, 20)));
     p.setPhone("062-" + to_string(getRand(121, 333)));
     p.setTariff(getRand(1.0, 5.0));
     p.setDiscount(getRand(0, 20));
@@ -15,11 +15,11 @@ Payer Payer::createFactory(int id) {
     return p;
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 string Payer::toString() const {
     ostringstream oss;
-    oss << "ID: " << getId() << ", Р¤РРћ: " << getName() << ", РўРµР»РµС„РѕРЅ: " << getPhone()
-        << ", РўР°СЂРёС„: " << fixed << setprecision(2) << getTariff() << ", РЎРєРёРґРєР°: " << getDiscount()
-        << ", РњРёРЅСѓС‚С‹: " << getTimeMin() << ", Р”Р°С‚Р°: " << getDate().toString() << ", РЎСѓРјРјР°: " << calculateSum();
+    oss << "ID: " << getId() << ", ФИО: " << getName() << ", Телефон: " << getPhone()
+        << ", Тариф: " << fixed << setprecision(2) << getTariff() << ", Скидка: " << getDiscount()
+        << ", Минуты: " << getTimeMin() << ", Дата: " << getDate().toString() << ", Сумма: " << calculateSum();
     return oss.str();
 }

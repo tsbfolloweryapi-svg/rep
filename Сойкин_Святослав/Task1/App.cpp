@@ -32,16 +32,16 @@ void App::loadFromBinary() {
 
 void App::run() {
     init();
-    // Ð¡Ð¾Ñ…Ñ€Ð°Ð½ÑÐµÐ¼ Ð¸ÑÑ…Ð¾Ð´Ð½Ñ‹Ð¹ Ð²ÐµÐºÑ‚Ð¾Ñ€ Ð² Ð±Ð¸Ð½Ð°Ñ€Ð½Ñ‹Ð¹ Ñ„Ð°Ð¹Ð» Ð¿ÐµÑ€ÐµÐ´ Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ°Ð¼Ð¸
+    // Ñîõðàíÿåì èñõîäíûé âåêòîð â áèíàðíûé ôàéë ïåðåä îáðàáîòêàìè
     saveToBinary();
 
-    // ÐÐ²Ñ‚Ð¾Ð¼Ð°Ñ‚Ð¸Ñ‡ÐµÑÐºÐ¸ Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€ÑƒÐµÐ¼ Ð¸Ð½Ñ‚ÐµÑ€Ð²Ð°Ð» [a,b]
+    // Àâòîìàòè÷åñêè ãåíåðèðóåì èíòåðâàë [a,b]
     float a = getRand(-50.0f, 50.0f);
     float b = a + getRand(0.0f, 100.0f);
     if (a > b) swap(a, b);
-    cout << "ÐÐ²Ñ‚Ð¾Ð³ÐµÐ½ÐµÑ€Ð¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ð¹ Ð¸Ð½Ñ‚ÐµÑ€Ð²Ð°Ð»: a=" << a << " b=" << b << "\n";
+    cout << "Àâòîãåíåðèðîâàííûé èíòåðâàë: a=" << a << " b=" << b << "\n";
 
-    // Ð’Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ðµ ÑˆÐ°Ð³Ð¾Ð² Ð¿Ð¾ Ð¾Ñ‡ÐµÑ€ÐµÐ´Ð¸
+    // Âûïîëíåíèå øàãîâ ïî î÷åðåäè
     step_countNegative();
     step_countOutsideInterval(a, b);
     step_sumBeforeFirstMin();
@@ -49,63 +49,63 @@ void App::run() {
     step_selectNegatives();
     step_selectOutsideInterval(a, b);
     step_sortDescending();
-    // Ð’Ð¾ÑÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð¸ÑÑ…Ð¾Ð´Ð½Ñ‹Ð¹ Ð²ÐµÐºÑ‚Ð¾Ñ€ Ð¸Ð· Ñ„Ð°Ð¹Ð»Ð° Ð¿ÐµÑ€ÐµÐ´ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð¸Ð¼Ð¸ Ð¾Ð¿ÐµÑ€Ð°Ñ†Ð¸ÑÐ¼Ð¸
+    // Âîññòàíàâëèâàåì èñõîäíûé âåêòîð èç ôàéëà ïåðåä ñëåäóþùèìè îïåðàöèÿìè
     loadFromBinary();
     step_sortByAbsAscending();
     loadFromBinary();
     step_moveOutsideIntervalToEnd(a, b);
 
-    // Ð’Ð¾ÑÑÑ‚Ð°Ð½Ð°Ð²Ð»Ð¸Ð²Ð°ÐµÐ¼ Ð²ÐµÐºÑ‚Ð¾Ñ€ Ð¸Ð· Ð±Ð¸Ð½Ð°Ñ€Ð½Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð° Ð¿Ð¾ÑÐ»Ðµ Ð²ÑÐµÑ… Ð¾Ð±Ñ€Ð°Ð±Ð¾Ñ‚Ð¾Ðº
+    // Âîññòàíàâëèâàåì âåêòîð èç áèíàðíîãî ôàéëà ïîñëå âñåõ îáðàáîòîê
     loadFromBinary();
-    cout << "Ð’ÐµÐºÑ‚Ð¾Ñ€ Ð²Ð¾ÑÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½ Ð¸Ð· Ð±Ð¸Ð½Ð°Ñ€Ð½Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð°, Ñ€Ð°Ð·Ð¼ÐµÑ€=" << vectorProcess_.data().size() << "\n";
+    cout << "Âåêòîð âîññòàíîâëåí èç áèíàðíîãî ôàéëà, ðàçìåð=" << vectorProcess_.data().size() << "\n";
 }
 
 void App::step_countNegative() {
     const auto negCount = vectorProcess_.numberNegatives();
-    cout << "1) ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ Ð¾Ñ‚Ñ€Ð¸Ñ†Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ñ… ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð²: " << negCount << "\n";
+    cout << "1) Êîëè÷åñòâî îòðèöàòåëüíûõ ýëåìåíòîâ: " << negCount << "\n";
 }
 
 void App::step_countOutsideInterval(float a, float b) {
     const auto notInInterval = vectorProcess_.numberNotInRange(a, b);
-    cout << "2) ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² Ð²Ð½Ðµ [a,b]: " << notInInterval << "\n";
+    cout << "2) Êîëè÷åñòâî ýëåìåíòîâ âíå [a,b]: " << notInInterval << "\n";
 }
 
 void App::step_sumBeforeFirstMin() {
     const auto sumBeforeMin = vectorProcess_.sumBeforeFirstMin();
-    cout << "3) Ð¡ÑƒÐ¼Ð¼Ð° Ð¿ÐµÑ€ÐµÐ´ Ð¿ÐµÑ€Ð²Ñ‹Ð¼ Ð¼Ð¸Ð½Ð¸Ð¼Ð°Ð»ÑŒÐ½Ñ‹Ð¼ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð¼: " << sumBeforeMin << "\n";
+    cout << "3) Ñóììà ïåðåä ïåðâûì ìèíèìàëüíûì ýëåìåíòîì: " << sumBeforeMin << "\n";
 }
 
 void App::step_sumBetweenFirstMinAndFirstMax() {
     const auto sumBetween = vectorProcess_.sumBetweenFirstMinFirstMax();
-    cout << "4) Ð¡ÑƒÐ¼Ð¼Ð° Ð¼ÐµÐ¶Ð´Ñƒ Ð¿ÐµÑ€Ð²Ñ‹Ð¼ min Ð¸ Ð¿ÐµÑ€Ð²Ñ‹Ð¼ max: " << sumBetween << "\n";
+    cout << "4) Ñóììà ìåæäó ïåðâûì min è ïåðâûì max: " << sumBetween << "\n";
 }
 
 void App::step_selectNegatives() {
     auto negatives = vectorProcess_.fihdNegatives();
-    cout << "5) ÐžÑ‚Ð¾Ð±Ñ€Ð°Ð½Ð½Ñ‹Ðµ Ð¾Ñ‚Ñ€Ð¸Ñ†Ð°Ñ‚ÐµÐ»ÑŒÐ½Ñ‹Ðµ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹ (count=" << negatives.size() << "):\n";
+    cout << "5) Îòîáðàííûå îòðèöàòåëüíûå ýëåìåíòû (count=" << negatives.size() << "):\n";
     if (!negatives.empty()) printVectorVisual(negatives, string());
 }
 
 void App::step_selectOutsideInterval(float a, float b) {
     auto outside = vectorProcess_.fihdNotInRange(a, b);
-    cout << "6) Ð­Ð»ÐµÐ¼ÐµÐ½Ñ‚Ñ‹ Ð²Ð½Ðµ [a,b] (count=" << outside.size() << "):\n";
+    cout << "6) Ýëåìåíòû âíå [a,b] (count=" << outside.size() << "):\n";
     if (!outside.empty()) printVectorVisual(outside, string());
 }
 
 void App::step_sortDescending() {
     vectorProcess_.orderByDesc();
-    cout << "7) Ð’ÐµÐºÑ‚Ð¾Ñ€ Ð¿Ð¾ÑÐ»Ðµ ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ¸ Ð¿Ð¾ ÑƒÐ±Ñ‹Ð²Ð°Ð½Ð¸ÑŽ:\n";
+    cout << "7) Âåêòîð ïîñëå ñîðòèðîâêè ïî óáûâàíèþ:\n";
     printVectorVisual(vectorProcess_.data(), string());
 }
 
 void App::step_sortByAbsAscending() {
     vectorProcess_.orderByAbs();
-    cout << "8) Ð’ÐµÐºÑ‚Ð¾Ñ€ Ð¿Ð¾ÑÐ»Ðµ ÑÐ¾Ñ€Ñ‚Ð¸Ñ€Ð¾Ð²ÐºÐ¸ Ð¿Ð¾ Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚Ð°Ð½Ð¸ÑŽ Ð¼Ð¾Ð´ÑƒÐ»ÐµÐ¹:\n";
+    cout << "8) Âåêòîð ïîñëå ñîðòèðîâêè ïî âîçðàñòàíèþ ìîäóëåé:\n";
     printVectorVisual(vectorProcess_.data(), string());
 }
 
 void App::step_moveOutsideIntervalToEnd(float a, float b) {
     vectorProcess_.orderByNotInRangeLast(a, b);
-    cout << "9) ÐŸÐµÑ€ÐµÐ½Ð¾Ñ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² Ð²Ð½Ðµ [a,b] Ð² ÐºÐ¾Ð½ÐµÑ† (Ð²Ð½ÑƒÑ‚Ñ€Ð¸-Ð¸Ð½Ñ‚ÐµÑ€Ð²Ð°Ð» Ð² Ð½Ð°Ñ‡Ð°Ð»Ðµ):\n";
+    cout << "9) Ïåðåíîñ ýëåìåíòîâ âíå [a,b] â êîíåö (âíóòðè-èíòåðâàë â íà÷àëå):\n";
     printVectorVisual(vectorProcess_.data(), string());
 }

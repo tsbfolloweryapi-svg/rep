@@ -1,26 +1,26 @@
 #include "pch.h"
 #include "Date.h"
 
-// РџСЂРѕРІРµСЂРєР° Рё СѓСЃС‚Р°РЅРѕРІРєР° РґР°С‚С‹
-// Р‘Р»РѕРє
+// Проверка и установка даты
+// Блок
 void Date::setDate(short day, short month, short year) {
-    // РџСЂРѕРІРµСЂСЏРµРј РїР°СЂР°РјРµС‚СЂС‹ РґР°С‚С‹ Рё РІС‹Р±СЂР°СЃС‹РІР°РµРј РёСЃРєР»СЋС‡РµРЅРёРµ РїСЂРё РѕС€РёР±РєРµ
+    // Проверяем параметры даты и выбрасываем исключение при ошибке
     char buf[1024];
-// Р’С‹РІРѕРґ/РћС‚РѕР±СЂР°Р¶РµРЅРёРµ
+// Вывод/Отображение
     if (!dateValid(day, month, year)) {
-        sprintf(buf, "%02d/%02d/%04d - РќРµРєРѕСЂСЂРµРєС‚РЅР°СЏ РґР°С‚Р°", day, month, year);
+        sprintf(buf, "%02d/%02d/%04d - Некорректная дата", day, month, year);
         throw exception(buf);
     } // if
 
-    // РЎРѕС…СЂР°РЅСЏРµРј Р·РЅР°С‡РµРЅРёСЏ
+    // Сохраняем значения
     day_ = day;
     month_ = month;
     year_ = year;
 } // Date::setDate
 
 
-// Р¤РѕСЂРјР°С‚ РІС‹РІРѕРґР° РґР°С‚С‹
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Формат вывода даты
+// Работа с файлом
 string Date::toString() const {
     ostringstream oss;
     oss << setw(2) << setfill('0') << day_ << "."
@@ -42,7 +42,7 @@ bool Date::operator==(const Date& date) const {
 } // operator==
 
 
-// Р‘Р»РѕРє
+// Блок
 int Date::toJulianDays() const {
     int a = (14 - getMonth()) / 12;
     int y = getYear() + 4800 - a;
@@ -51,7 +51,7 @@ int Date::toJulianDays() const {
 } // Date::toJulianDays
 
 
-// Р‘Р»РѕРє
+// Блок
 void Date::toGrigorian(int julianDays) {
     int a = julianDays + 32044;
     int b = (4 * a + 3) / 146097;
@@ -82,7 +82,7 @@ istream& operator>>(istream& is, Date& date) {
 
 
 // Static methods definitions
-// Р‘Р»РѕРє
+// Блок
 bool Date::dateValid(short day, short month, short year) {
     if (year < 0) return false;
     if (month < 1 || month > 12) return false;
@@ -90,9 +90,9 @@ bool Date::dateValid(short day, short month, short year) {
     return true;
 }
 
-// Р‘Р»РѕРє
+// Блок
 short Date::daysInMonth(short month, short year) {
-// Р‘Р»РѕРє
+// Блок
     switch (month) {
     case 4:  case 6:  case 9:  case 11: return 30;
     case 2:  return isLeapYear(year) ? 29 : 28;
@@ -100,7 +100,7 @@ short Date::daysInMonth(short month, short year) {
     } // switch
 }
 
-// Р‘Р»РѕРє
+// Блок
 bool Date::isLeapYear(short year) {
     return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
 }

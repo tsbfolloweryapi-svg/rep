@@ -1,13 +1,13 @@
 #include "Request.h"
 #include "Utils.h"
 
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
 Request Request::createFactory(int id) {
     Request r;
     r.id = id;
-    string dest = "РџСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ " + to_string(getRand(1, 15));
+    string dest = "Пункт назначения " + to_string(getRand(1, 15));
     string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
-    string pass = "РРІР°РЅРѕРІ " + to_string(getRand(1, 30)) + " Рџ.Рћ.";
+    string pass = "Иванов " + to_string(getRand(1, 30)) + " П.О.";
     Date d;
     d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
 
@@ -18,15 +18,15 @@ Request Request::createFactory(int id) {
     return r;
 }
 
-// РћР±СЂР°Р±РѕС‚РєР°/Р—Р°РїСЂРѕСЃС‹
+// Обработка/Запросы
 string Request::toString() const {
     ostringstream oss;
-    oss << "ID: " << id << ", РџСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ: " << destination << ", Р РµР№СЃ: " << flightNum
-        << ", РџР°СЃСЃР°Р¶РёСЂ: " << passenger << ", Р”Р°С‚Р°: " << date.toString();
+    oss << "ID: " << id << ", Пункт назначения: " << destination << ", Рейс: " << flightNum
+        << ", Пассажир: " << passenger << ", Дата: " << date.toString();
     return oss.str();
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&id), sizeof(id));
     os.write(destination, 31);
@@ -40,7 +40,7 @@ void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&year), sizeof(year));
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 bool Request::readBinary(istream& is, Request& out) {
     if (!is.read(reinterpret_cast<char*>(&out.id), sizeof(out.id))) return false;
     if (!is.read(out.destination, 31)) return false;

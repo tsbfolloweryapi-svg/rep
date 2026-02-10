@@ -9,122 +9,122 @@ Requests::Requests() {
     }
 }
 
-// РћР±СЂР°Р±РѕС‚РєР°/Р—Р°РїСЂРѕСЃС‹
+// Обработка/Запросы
 void Requests::addRequest() {
     list_.push_back(Request::createFactory(nextId_++));
 }
 
-// РћР±СЂР°Р±РѕС‚РєР°/Р—Р°РїСЂРѕСЃС‹
+// Обработка/Запросы
 void Requests::deleteById(int id) {
     list_.remove_if([id](const Request& r) { return r.getId() == id; });
 }
 
-// Р¤РёР»СЊС‚СЂР°С†РёСЏ/Р’С‹Р±РѕСЂРєР°
+// Фильтрация/Выборка
 list<Request> Requests::selectByFlight(const string& flight) {
-    if (flight.empty()) throw std::invalid_argument("РќРѕРјРµСЂ СЂРµР№СЃР° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚");
+    if (flight.empty()) throw std::invalid_argument("Номер рейса не может быть пуст");
     list<Request> result;
-// Р‘Р»РѕРє
+// Блок
     for (const auto &r : list_) {
         if (r.getFlightNum() == flight) result.push_back(r);
     }
     return result;
 }
 
-// Р¤РёР»СЊС‚СЂР°С†РёСЏ/Р’С‹Р±РѕСЂРєР°
+// Фильтрация/Выборка
 list<Request> Requests::selectByDate(const Date& date) {
     list<Request> result;
-// Р‘Р»РѕРє
+// Блок
     for (const auto &r : list_) {
         if (r.getDate() == date) result.push_back(r);
     }
     return result;
 }
 
-// Р¤РёР»СЊС‚СЂР°С†РёСЏ/Р’С‹Р±РѕСЂРєР°
+// Фильтрация/Выборка
 list<Request> Requests::selectByPassenger(const string& pass) {
-    if (pass.empty()) throw std::invalid_argument("РРјСЏ РїР°СЃСЃР°Р¶РёСЂР° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚Рѕ");
+    if (pass.empty()) throw std::invalid_argument("Имя пассажира не может быть пусто");
     list<Request> result;
-// Р‘Р»РѕРє
+// Блок
     for (const auto &r : list_) {
         if (r.getPassenger() == pass) result.push_back(r);
     }
     return result;
 }
 
-// РЎРѕСЂС‚РёСЂРѕРІРєР°
+// Сортировка
 void Requests::sortById() {
     list_.sort([](const Request& a, const Request& b) { return a.getId() < b.getId(); });
 }
 
-// РЎРѕСЂС‚РёСЂРѕРІРєР°
+// Сортировка
 void Requests::sortByDate() {
     list_.sort([](const Request& a, const Request& b) { return a.getDate() < b.getDate(); });
 }
 
-// РЎРѕСЂС‚РёСЂРѕРІРєР°
+// Сортировка
 void Requests::sortByDestination() {
     list_.sort([](const Request& a, const Request& b) { return a.getDestination() < b.getDestination(); });
 }
 
-// РћР±СЂР°Р±РѕС‚РєР°/Р—Р°РїСЂРѕСЃС‹
+// Обработка/Запросы
 void Requests::changeRequest(int id) {
-    if (id <= 0) throw std::invalid_argument("ID РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј С‡РёСЃР»РѕРј");
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+    if (id <= 0) throw std::invalid_argument("ID должен быть положительным числом");
+// Инициализация/Точка входа
     for (auto& r : list_) {
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
         if (r.getId() == id) {
             Request newR = Request::createFactory(id);
             r = newR;  // copy
             return;
         }
     }
-    throw exception("Р—Р°СЏРІРєР° РЅРµ РЅР°Р№РґРµРЅР°");
+    throw exception("Заявка не найдена");
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void Requests::saveToBinaryFixed(const string& fname) const {
     ofstream out(fname, ios::binary | ios::trunc);
-    if (!out.is_open()) throw exception(("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " + fname).c_str());
+    if (!out.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
     for (const auto& r : list_) {
         r.writeBinary(out);
     }
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void Requests::loadFromBinaryFixed(const string& fname) {
     ifstream in(fname, ios::binary);
-    if (!in.is_open()) throw exception(("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " + fname).c_str());
+    if (!in.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());
 
     list_.clear();
     Request r;
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
     while (Request::readBinary(in, r)) {
         list_.push_back(r);
         nextId_ = max(nextId_, r.getId() + 1);
     }
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void Requests::swapFirstLastInFile(const string& fname) {
     fstream f(fname, ios::binary | ios::in | ios::out);
-    if (!f.is_open()) throw exception(("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " + fname).c_str());
+    if (!f.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());
 
     f.seekg(0, ios::end);
     size_t fileSize = static_cast<size_t>(f.tellg());
     size_t recSize = Request::binarySize();
-    if (fileSize < 2 * recSize) throw exception("РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ Р·Р°РїРёСЃРµР№ РІ С„Р°Р№Р»Рµ");
+    if (fileSize < 2 * recSize) throw exception("Недостаточно записей в файле");
 
     // read first
     f.seekg(0);
     Request first;
-    if (!Request::readBinary(f, first)) throw exception("РћС€РёР±РєР° С‡С‚РµРЅРёСЏ Р·Р°РїРёСЃРё РёР· С„Р°Р№Р»Р°");
+    if (!Request::readBinary(f, first)) throw exception("Ошибка чтения записи из файла");
 
     // read last
     f.seekg(static_cast<streamoff>(fileSize - recSize));
     Request last;
-    if (!Request::readBinary(f, last)) throw exception("РћС€РёР±РєР° С‡С‚РµРЅРёСЏ Р·Р°РїРёСЃРё РёР· С„Р°Р№Р»Р°");
+    if (!Request::readBinary(f, last)) throw exception("Ошибка чтения записи из файла");
 
     // write last to first position
     f.seekp(0);
@@ -135,15 +135,15 @@ void Requests::swapFirstLastInFile(const string& fname) {
     first.writeBinary(f);
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void Requests::swapEarliestLatestInFile(const string& fname) {
     fstream f(fname, ios::binary | ios::in | ios::out);
-    if (!f.is_open()) throw exception(("РќРµ СѓРґР°Р»РѕСЃСЊ РѕС‚РєСЂС‹С‚СЊ С„Р°Р№Р» " + fname).c_str());
+    if (!f.is_open()) throw exception(("Не удалось открыть файл " + fname).c_str());
 
     f.seekg(0, ios::end);
     size_t fileSize = static_cast<size_t>(f.tellg());
     size_t recSize = Request::binarySize();
-    if (fileSize < 2 * recSize) throw exception("РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ Р·Р°РїРёСЃРµР№ РІ С„Р°Р№Р»Рµ");
+    if (fileSize < 2 * recSize) throw exception("Недостаточно записей в файле");
 
     size_t numRecs = fileSize / recSize;
     Date minDate; minDate.setDate(31, 12, 9999);
@@ -153,20 +153,20 @@ void Requests::swapEarliestLatestInFile(const string& fname) {
     for (size_t pos = 0; pos < numRecs; ++pos) {
         f.seekg(static_cast<streamoff>(pos * recSize));
         Request tmp;
-        if (!Request::readBinary(f, tmp)) throw exception("РћС€РёР±РєР° С‡С‚РµРЅРёСЏ Р·Р°РїРёСЃРё РёР· С„Р°Р№Р»Р°");
+        if (!Request::readBinary(f, tmp)) throw exception("Ошибка чтения записи из файла");
         Date d = tmp.getDate();
         if (d < minDate) { minDate = d; minPos = pos; }
         if (maxDate < d) { maxDate = d; maxPos = pos; }
     }
 
-    if (minPos == maxPos) throw exception("РќРµС‚ РїРѕРґС…РѕРґСЏС‰РёС… Р·Р°РїРёСЃРµР№ РґР»СЏ swap");
+    if (minPos == maxPos) throw exception("Нет подходящих записей для swap");
 
     Request minR, maxR;
     f.seekg(static_cast<streamoff>(minPos * recSize));
-    if (!Request::readBinary(f, minR)) throw exception("РћС€РёР±РєР° С‡С‚РµРЅРёСЏ Р·Р°РїРёСЃРё РёР· С„Р°Р№Р»Р°");
+    if (!Request::readBinary(f, minR)) throw exception("Ошибка чтения записи из файла");
 
     f.seekg(static_cast<streamoff>(maxPos * recSize));
-    if (!Request::readBinary(f, maxR)) throw exception("РћС€РёР±РєР° С‡С‚РµРЅРёСЏ Р·Р°РїРёСЃРё РёР· С„Р°Р№Р»Р°");
+    if (!Request::readBinary(f, maxR)) throw exception("Ошибка чтения записи из файла");
 
     f.seekp(static_cast<streamoff>(minPos * recSize));
     maxR.writeBinary(f);

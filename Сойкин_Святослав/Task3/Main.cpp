@@ -4,9 +4,9 @@
 #include "Menu.h"
 #include "App.h"
 
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
 int main() {
-    init(L"Task3: Р—Р°СЏРІРєРё РЅР° Р°РІРёР°Р±РёР»РµС‚С‹");
+    init(L"Task3: Заявки на авиабилеты");
 
     App app;
 
@@ -28,34 +28,34 @@ int main() {
     };
 
     vector<MenuItem> items = {
-        MenuItem(CMD_ADD, "Р”РѕР±Р°РІРёС‚СЊ Р·Р°СЏРІРєСѓ"),
-        MenuItem(CMD_REMOVE, "РЈРґР°Р»РёС‚СЊ РїРѕ ID"),
-        MenuItem(CMD_FILTER_FLIGHT, "РћС‚Р±РѕСЂ РїРѕ СЂРµР№СЃСѓ"),
-        MenuItem(CMD_FILTER_DATE, "РћС‚Р±РѕСЂ РїРѕ РґР°С‚Рµ"),
-        MenuItem(CMD_FILTER_PASS, "РћС‚Р±РѕСЂ РїРѕ РїР°СЃСЃР°Р¶РёСЂСѓ"),
-        MenuItem(CMD_SORT_ID, "РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ ID"),
-        MenuItem(CMD_SORT_DATE, "РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РґР°С‚Рµ"),
-        MenuItem(CMD_SORT_DEST, "РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ РїСѓРЅРєС‚Сѓ РЅР°Р·РЅР°С‡РµРЅРёСЏ"),
-        MenuItem(CMD_CHANGE, "РР·РјРµРЅРёС‚СЊ Р·Р°СЏРІРєСѓ"),
+        MenuItem(CMD_ADD, "Добавить заявку"),
+        MenuItem(CMD_REMOVE, "Удалить по ID"),
+        MenuItem(CMD_FILTER_FLIGHT, "Отбор по рейсу"),
+        MenuItem(CMD_FILTER_DATE, "Отбор по дате"),
+        MenuItem(CMD_FILTER_PASS, "Отбор по пассажиру"),
+        MenuItem(CMD_SORT_ID, "Сортировка по ID"),
+        MenuItem(CMD_SORT_DATE, "Сортировка по дате"),
+        MenuItem(CMD_SORT_DEST, "Сортировка по пункту назначения"),
+        MenuItem(CMD_CHANGE, "Изменить заявку"),
         MenuItem(CMD_SAVE, "Save binary"),
         MenuItem(CMD_LOAD, "Load binary"),
         MenuItem(CMD_SWAP_FIRST_LAST, "Swap first/last in file"),
         MenuItem(CMD_SWAP_EARLY_LATEST, "Swap earliest/latest in file"),
-        MenuItem(Menu::CMD_QUIT, "Р’С‹С…РѕРґ")
+        MenuItem(Menu::CMD_QUIT, "Выход")
     };
 
     Menu menu(COORD{ 5, 5 }, items, mainColor, infoColor);
 
-// Р’С‹РІРѕРґ/РћС‚РѕР±СЂР°Р¶РµРЅРёРµ
+// Вывод/Отображение
     while (true) {
         try {
             cls();
-            showNavBarMessage(hintColor, "Task3: Р—Р°СЏРІРєРё");
+            showNavBarMessage(hintColor, "Task3: Заявки");
 
             int cmd = menu.navigate();
             if (cmd == Menu::CMD_QUIT) break;
 
-// Р¤РёР»СЊС‚СЂР°С†РёСЏ/Р’С‹Р±РѕСЂРєР°
+// Фильтрация/Выборка
             switch (cmd) {
             case CMD_ADD: app.doAddRequest(); break;
             case CMD_REMOVE: app.doDeleteById(); break;
@@ -74,13 +74,13 @@ int main() {
 
             getKey("");
         }
-// Р‘Р»РѕРє
+// Блок
         catch (exception& ex) {
             int x = 12, y = 8;
             cout << color(errColor)
                 << pos(x, y) << setw(W) << " "
                 << pos(x, y + 1) << setw(W) << " "
-                << pos(x, y + 2) << setw(W) << left << "    [РћС€РёР±РєР°]"
+                << pos(x, y + 2) << setw(W) << left << "    [Ошибка]"
                 << pos(x, y + 3) << setw(W) << " "
                 << pos(x, y + 4) << setw(W) << ("    "s + ex.what())
                 << pos(x, y + 5) << setw(W) << " "

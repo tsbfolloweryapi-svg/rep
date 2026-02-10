@@ -3,14 +3,14 @@
 
 
 
-// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ/РўРѕС‡РєР° РІС…РѕРґР°
+// Инициализация/Точка входа
 int main() {
 	try {
 		App app;
 		app.run();
 	}
 	catch (const exception &ex) {
-		cout << "РћС€РёР±РєР°: " << ex.what() << "\n";
+		cout << "Ошибка: " << ex.what() << "\n";
 		return 1;
 	}
 

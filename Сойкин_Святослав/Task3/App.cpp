@@ -3,214 +3,214 @@
 
 App::App() {}
 
-// Р’С‹РІРѕРґ/РћС‚РѕР±СЂР°Р¶РµРЅРёРµ
+// Вывод/Отображение
 void App::printList(const list<Request>& lst, const string& title) const {
     cout << "     " << title << "\n"
         << "     +" << setfill('-') << setw(112) << "-" << "+"
         << setfill(' ') << "\n";
 
     int row = 1;
-// Р‘Р»РѕРє
+// Блок
     for (const auto& r : lst) {
         cout << " " << setfill('0') << setw(3) << row++ << setfill(' ')
             << " | ID: " << setw(2) << r.id
-            << " | РџСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ: " << setw(19) << r.destination
-            << " | Р РµР№СЃ: " << setw(8) << r.flightNum
-            << " | РџР°СЃСЃР°Р¶РёСЂ: " << setw(15) << r.passenger
-            << " | Р”Р°С‚Р°: " << r.date.toString() << " |\n";
+            << " | Пункт назначения: " << setw(19) << r.destination
+            << " | Рейс: " << setw(8) << r.flightNum
+            << " | Пассажир: " << setw(15) << r.passenger
+            << " | Дата: " << r.date.toString() << " |\n";
     }
     cout << "     +" << setfill('-') << setw(112) << "-" << "+"
         << setfill(' ') << "\n";
 }
 
-// РћР±СЂР°Р±РѕС‚РєР°/Р—Р°РїСЂРѕСЃС‹
+// Обработка/Запросы
 void App::doAddRequest() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.addRequest();
-    cout << "Р”РѕР±Р°РІР»РµРЅРѕ\n";
+    cout << "Добавлено\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// Р’С‹РІРѕРґ/РћС‚РѕР±СЂР°Р¶РµРЅРёРµ
+// Вывод/Отображение
 void App::doDeleteById() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
-    if (getRequests().empty()) throw exception("РЎРїРёСЃРѕРє РїСѓСЃС‚");
+    if (getRequests().empty()) throw exception("Список пуст");
 
     const auto& all = requests_.getList();
     auto it = all.begin();
     advance(it, getRand(0, static_cast<int>(all.size()) - 1));
     int id = it->getId();
     requests_.deleteById(id);
-    cout << color(errColor) << "РЈРґР°Р»РµРЅР° Р·Р°СЏРІРєР° ID: " << id << color(mainColor) << "\n";
+    cout << color(errColor) << "Удалена заявка ID: " << id << color(mainColor) << "\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// Р¤РёР»СЊС‚СЂР°С†РёСЏ/Р’С‹Р±РѕСЂРєР°
+// Фильтрация/Выборка
 void App::doSelectByFlight() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
-    if (getRequests().empty()) throw exception("РЎРїРёСЃРѕРє РїСѓСЃС‚");
+    if (getRequests().empty()) throw exception("Список пуст");
 
     const auto& all = requests_.getList();
     auto it = all.begin();
     advance(it, getRand(0, static_cast<int>(all.size()) - 1));
     string flight = it->getFlightNum();
-    cout << "Р РµР№СЃ: " << flight << "\n";
+    cout << "Рейс: " << flight << "\n";
     auto res = requests_.selectByFlight(flight);
-    printList(res, "Р—Р°СЏРІРєРё РїРѕ СЂРµР№СЃСѓ");
+    printList(res, "Заявки по рейсу");
 }
 
-// Р¤РёР»СЊС‚СЂР°С†РёСЏ/Р’С‹Р±РѕСЂРєР°
+// Фильтрация/Выборка
 void App::doSelectByDate() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
-    if (getRequests().empty()) throw exception("РЎРїРёСЃРѕРє РїСѓСЃС‚");
+    if (getRequests().empty()) throw exception("Список пуст");
 
     const auto& all = requests_.getList();
     auto it = all.begin();
     advance(it, getRand(0, static_cast<int>(all.size()) - 1));
     Date date = it->getDate();
-    cout << "Р”Р°С‚Р°: " << date.toString() << "\n";
+    cout << "Дата: " << date.toString() << "\n";
     auto res = requests_.selectByDate(date);
-    printList(res, "Р—Р°СЏРІРєРё РїРѕ РґР°С‚Рµ");
+    printList(res, "Заявки по дате");
 }
 
-// Р¤РёР»СЊС‚СЂР°С†РёСЏ/Р’С‹Р±РѕСЂРєР°
+// Фильтрация/Выборка
 void App::doSelectByPassenger() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
-    if (getRequests().empty()) throw exception("РЎРїРёСЃРѕРє РїСѓСЃС‚");
+    if (getRequests().empty()) throw exception("Список пуст");
 
     const auto& all = requests_.getList();
     auto it = all.begin();
     advance(it, getRand(0, static_cast<int>(all.size()) - 1));
     string pass = it->getPassenger();
-    cout << "РџР°СЃСЃР°Р¶РёСЂ: " << pass << "\n";
+    cout << "Пассажир: " << pass << "\n";
     auto res = requests_.selectByPassenger(pass);
-    printList(res, "Р—Р°СЏРІРєРё РїРѕ РїР°СЃСЃР°Р¶РёСЂСѓ");
+    printList(res, "Заявки по пассажиру");
 }
 
-// РЎРѕСЂС‚РёСЂРѕРІРєР°
+// Сортировка
 void App::doSortById() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.sortById();
-    cout << "РћС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРѕ РїРѕ ID\n";
+    cout << "Отсортировано по ID\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// РЎРѕСЂС‚РёСЂРѕРІРєР°
+// Сортировка
 void App::doSortByDate() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.sortByDate();
-    cout << "РћС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРѕ РїРѕ РґР°С‚Рµ\n";
+    cout << "Отсортировано по дате\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// РЎРѕСЂС‚РёСЂРѕРІРєР°
+// Сортировка
 void App::doSortByDestination() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.sortByDestination();
-    cout << "РћС‚СЃРѕСЂС‚РёСЂРѕРІР°РЅРѕ РїРѕ РїСѓРЅРєС‚Сѓ РЅР°Р·РЅР°С‡РµРЅРёСЏ\n";
+    cout << "Отсортировано по пункту назначения\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// РћР±СЂР°Р±РѕС‚РєР°/Р—Р°РїСЂРѕСЃС‹
+// Обработка/Запросы
 void App::doChangeRequest() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
-    if (getRequests().empty()) throw exception("РЎРїРёСЃРѕРє РїСѓСЃС‚");
+    if (getRequests().empty()) throw exception("Список пуст");
 
     auto it = getRequests().begin();
     advance(it, getRand(0, getRequests().size() - 1));
     int id = it->id;
     requests_.changeRequest(id);
-    cout << "РР·РјРµРЅРµРЅР° Р·Р°СЏРІРєР° ID: " << id << "\n";
+    cout << "Изменена заявка ID: " << id << "\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void App::doSaveToBinaryFixed() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.saveToBinaryFixed(binFile_);
-    cout << "РЎРѕС…СЂР°РЅРµРЅРѕ\n";
+    cout << "Сохранено\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void App::doLoadFromBinaryFixed() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.loadFromBinaryFixed(binFile_);
-    cout << "Р—Р°РіСЂСѓР¶РµРЅРѕ\n";
+    cout << "Загружено\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void App::doSwapFirstLastInFile() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.swapFirstLastInFile(binFile_);
-    cout << "РџРµСЂРІР°СЏ/РїРѕСЃР»РµРґРЅСЏСЏ Р·Р°РїРёСЃСЊ РїРѕРјРµРЅСЏРЅС‹ РјРµСЃС‚Р°РјРё\n";
+    cout << "Первая/последняя запись поменяны местами\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
 
-// Р Р°Р±РѕС‚Р° СЃ С„Р°Р№Р»РѕРј
+// Работа с файлом
 void App::doSwapEarliestLatestInFile() {
     cls();
-    printList(getRequests(), "РЎРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
-    getKey("\nРќР°Р¶РјРёС‚Рµ Р»СЋР±СѓСЋ РєР»Р°РІРёС€Сѓ РґР»СЏ РїСЂРѕРґРѕР»Р¶РµРЅРёСЏ... \n\n");
+    printList(getRequests(), "Список заявок");
+    getKey("\nНажмите любую клавишу для продолжения... \n\n");
 
     requests_.swapEarliestLatestInFile(binFile_);
-    cout << "РЎР°РјС‹Рµ СЂР°РЅРЅРёРµ/РїРѕР·РґРЅРёРµ Р·Р°РїРёСЃРё РїРѕРјРµРЅСЏРЅС‹ РјРµСЃС‚Р°РјРё\n";
+    cout << "Самые ранние/поздние записи поменяны местами\n";
 
     cls();
-    printList(getRequests(), "РўРµРєСѓС‰РёР№ СЃРїРёСЃРѕРє Р·Р°СЏРІРѕРє");
+    printList(getRequests(), "Текущий список заявок");
 }
