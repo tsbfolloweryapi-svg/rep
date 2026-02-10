@@ -1,66 +1,51 @@
 #include "Request.h"
 #include "Utils.h"
+#include <algorithm>
+#include <cstring>
 
 // ?????????????/????? ?????
-// Factory: create a sample Request
 Request Request::createFactory(int id) {
-    // allocate and fill a Request object
     Request r;
     r.id = id;
-
-    // build destination text
-    string dest = "ѕункт назначени€ " + to_string(getRand(1, 15));
-
-    // build flight number text
+    string dest = "????? ?????????? " + to_string(getRand(1, 15));
     string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
-
-    // build passenger name text
-    string pass = "ѕассажир " + to_string(getRand(1, 30)) + " ѕ.";
-
-    // build date
+    string pass = "?????? " + to_string(getRand(1, 30)) + " ?.?.";
     Date d;
     d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
-
-    // assign string fields
+    // присвоить строковые пол€
     r.destination = dest;
     r.flightNum = flight;
     r.passenger = pass;
     r.date = d;
-
-    // return filled record
     return r;
 }
 
-// Convert Request to human-readable string
+// ?????????/???????
 string Request::toString() const {
-    // compose textual representation
     ostringstream oss;
-    oss << "ID: " << id << ", ѕункт назначени€: " << destination << ", –ейс: " << flightNum
-        << ", ѕассажир: " << passenger << ", ƒата: " << date.toString();
+    // сформировать строковое представление
+    oss << "ID: " << id << ", направление: " << destination << ", рейс: " << flightNum
+        << ", пассажир: " << passenger << ", дата: " << date.toString();
     return oss.str();
 }
 
-// Serialize Request to fixed-size binary record
+// ?????? ? ??????
 void Request::writeBinary(ostream& os) const {
-    // write id
+    // записать идентификатор
     os.write(reinterpret_cast<const char*>(&id), sizeof(id));
-
-    // prepare and write fixed-size destination (31 bytes)
-    char destBuf[31] = {0};
-    strncpy(destBuf, destination.c_str(), 30);
-    os.write(destBuf, 31);
-
-    // prepare and write fixed-size flight number (16 bytes)
-    char flightBuf[16] = {0};
-    strncpy(flightBuf, flightNum.c_str(), 15);
-    os.write(flightBuf, 16);
-
-    // prepare and write fixed-size passenger (31 bytes)
-    char passBuf[31] = {0};
-    strncpy(passBuf, passenger.c_str(), 30);
-    os.write(passBuf, 31);
-
-    // write date components
+    // записать destination фиксированного размера
+    char bufDest[31]; memset(bufDest, 0, sizeof(bufDest));
+    memcpy(bufDest, destination.c_str(), min<size_t>(destination.size(), 30));
+    os.write(bufDest, sizeof(bufDest));
+    // записать flightNum фиксированного размера
+    char bufFlight[16]; memset(bufFlight, 0, sizeof(bufFlight));
+    memcpy(bufFlight, flightNum.c_str(), min<size_t>(flightNum.size(), 15));
+    os.write(bufFlight, sizeof(bufFlight));
+    // записать passenger фиксированного размера
+    char bufPass[31]; memset(bufPass, 0, sizeof(bufPass));
+    memcpy(bufPass, passenger.c_str(), min<size_t>(passenger.size(), 30));
+    os.write(bufPass, sizeof(bufPass));
+    // записать дату
     short day = date.getDay();
     short month = date.getMonth();
     short year = date.getYear();
@@ -69,36 +54,24 @@ void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&year), sizeof(year));
 }
 
-// Deserialize Request from fixed-size binary record
+// ?????? ? ??????
 bool Request::readBinary(istream& is, Request& out) {
-    // read id
+    // прочитать идентификатор
     if (!is.read(reinterpret_cast<char*>(&out.id), sizeof(out.id))) return false;
-
-    // read fixed-size destination
-    char destBuf[31];
-    if (!is.read(destBuf, 31)) return false;
-    destBuf[30] = '\0';
-    out.destination = string(destBuf);
-
-    // read fixed-size flight number
-    char flightBuf[16];
-    if (!is.read(flightBuf, 16)) return false;
-    flightBuf[15] = '\0';
-    out.flightNum = string(flightBuf);
-
-    // read fixed-size passenger
-    char passBuf[31];
-    if (!is.read(passBuf, 31)) return false;
-    passBuf[30] = '\0';
-    out.passenger = string(passBuf);
-
-    // read date components
+    // прочитать destination фиксированного размера
+    char bufDest[31]; if (!is.read(bufDest, sizeof(bufDest))) return false;
+    bufDest[30] = '\0'; out.destination = string(bufDest);
+    // прочитать flightNum фиксированного размера
+    char bufFlight[16]; if (!is.read(bufFlight, sizeof(bufFlight))) return false;
+    bufFlight[15] = '\0'; out.flightNum = string(bufFlight);
+    // прочитать passenger фиксированного размера
+    char bufPass[31]; if (!is.read(bufPass, sizeof(bufPass))) return false;
+    bufPass[30] = '\0'; out.passenger = string(bufPass);
+    // прочитать дату
     short day, month, year;
     if (!is.read(reinterpret_cast<char*>(&day), sizeof(day))) return false;
     if (!is.read(reinterpret_cast<char*>(&month), sizeof(month))) return false;
     if (!is.read(reinterpret_cast<char*>(&year), sizeof(year))) return false;
-
-    // set date and return success
     out.date.setDate(day, month, year);
     return true;
 }
