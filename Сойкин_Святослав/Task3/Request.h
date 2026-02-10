@@ -9,7 +9,7 @@ struct Request : public Object {
     string passenger;    // logical field, serialized as fixed 31 bytes
     Date date;
 
-    static Request createFactory(int id);  // С„Р°Р±СЂРёС‡РЅС‹Р№ РјРµС‚РѕРґ СЃРѕР·РґР°РЅРёСЏ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РїРёСЃРё
+    static Request createFactory(int id);  // фабричный метод создания тестовой записи
 
     // Binary (fixed-size) serialization helpers
     void writeBinary(ostream& os) const;
@@ -22,5 +22,5 @@ struct Request : public Object {
     string getPassenger() const { return passenger; }
     Date getDate() const { return date; }
 
-    string toString() const override;  // РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ РґР»СЏ РІС‹РІРѕРґР°
+    string toString() const override;  // представление для вывода
 };

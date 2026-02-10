@@ -1,64 +1,64 @@
 #include "Request.h"
 #include "Utils.h"
-// РЎРѕР·РґР°РЅРёРµ С‚РµСЃС‚РѕРІРѕР№ Р·Р°РїРёСЃРё (factory)
+// Создание тестовой записи (factory)
 Request Request::createFactory(int id) {
-    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ СЃС‚СЂСѓРєС‚СѓСЂС‹ СЂРµР·СѓР»СЊС‚Р°С‚Р°
+    // Инициализация структуры результата
     Request r;
     r.id = id;
 
-    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЃС‚СЂРѕРєРё РїСѓРЅРєС‚Р° РЅР°Р·РЅР°С‡РµРЅРёСЏ
-    string dest = "РџСѓРЅРєС‚ " + to_string(getRand(1, 15));
+    // Формирование строки пункта назначения
+    string dest = "Пункт " + to_string(getRand(1, 15));
 
-    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЃС‚СЂРѕРєРё РЅРѕРјРµСЂР° СЂРµР№СЃР°
+    // Формирование строки номера рейса
     string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
 
-    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЃС‚СЂРѕРєРё РїР°СЃСЃР°Р¶РёСЂР°
-    string pass = "РџР°СЃСЃР°Р¶РёСЂ " + to_string(getRand(1, 30)) + " Рџ.Рћ.";
+    // Формирование строки пассажира
+    string pass = "Пассажир " + to_string(getRand(1, 30)) + " П.О.";
 
-    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РґР°С‚С‹ РІС‹Р»РµС‚Р°
+    // Формирование даты вылета
     Date d;
     d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
 
-    // РџСЂРёСЃРІРѕРµРЅРёРµ Р»РѕРіРёС‡РµСЃРєРёС… РїРѕР»РµР№ (СЃС‚СЂРѕРє) СЃ РѕР±СЂРµР·РєРѕР№ РїРѕ РјР°РєСЃРёРјР°Р»СЊРЅРѕ РґРѕРїСѓСЃС‚РёРјРѕР№ РґР»РёРЅРµ
+    // Присвоение логических полей (строк) с обрезкой по максимально допустимой длине
     r.destination = dest.substr(0, 30);
     r.flightNum = flight.substr(0, 15);
     r.passenger = pass.substr(0, 30);
     r.date = d;
 
-    // Р’РѕР·РІСЂР°С‚ Р·Р°РїРѕР»РЅРµРЅРЅРѕР№ Р·Р°РїРёСЃРё
+    // Возврат заполненной записи
     return r;
 }
 
-// РџСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ Р·Р°РїРёСЃРё РІ СЃС‚СЂРѕРєСѓ РґР»СЏ РІС‹РІРѕРґР°
+// Преобразование записи в строку для вывода
 string Request::toString() const {
-    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ С‡РµР»РѕРІРµРєРѕС‡РёС‚Р°РµРјРѕР№ СЃС‚СЂРѕРєРё
+    // Формирование человекочитаемой строки
     ostringstream oss;
-    oss << "ID: " << id << ", РїСѓРЅРєС‚: " << destination << ", СЂРµР№СЃ: " << flightNum
-        << ", РїР°СЃСЃР°Р¶РёСЂ: " << passenger << ", РґР°С‚Р°: " << date.toString();
+    oss << "ID: " << id << ", пункт: " << destination << ", рейс: " << flightNum
+        << ", пассажир: " << passenger << ", дата: " << date.toString();
     return oss.str();
 }
 
-// Р—Р°РїРёСЃСЊ РІ Р±РёРЅР°СЂРЅС‹Р№ РїРѕС‚РѕРє СЃ С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹РјРё РїРѕР»СЏРјРё
+// Запись в бинарный поток с фиксированными полями
 void Request::writeBinary(ostream& os) const {
-    // Р—Р°РїРёСЃСЊ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР°
+    // Запись идентификатора
     os.write(reinterpret_cast<const char*>(&id), sizeof(id));
 
-    // РџРѕРґРіРѕС‚РѕРІРєР° Рё Р·Р°РїРёСЃСЊ РїРѕР»СЏ destination (31 Р±Р°Р№С‚, РІРєР»СЋС‡Р°СЏ С‚РµСЂРјРёРЅР°С‚РѕСЂ)
+    // Подготовка и запись поля destination (31 байт, включая терминатор)
     char bufDest[31] = {0};
     strncpy(bufDest, destination.c_str(), 30);
     os.write(bufDest, 31);
 
-    // РџРѕРґРіРѕС‚РѕРІРєР° Рё Р·Р°РїРёСЃСЊ РїРѕР»СЏ flightNum (16 Р±Р°Р№С‚)
+    // Подготовка и запись поля flightNum (16 байт)
     char bufFlight[16] = {0};
     strncpy(bufFlight, flightNum.c_str(), 15);
     os.write(bufFlight, 16);
 
-    // РџРѕРґРіРѕС‚РѕРІРєР° Рё Р·Р°РїРёСЃСЊ РїРѕР»СЏ passenger (31 Р±Р°Р№С‚)
+    // Подготовка и запись поля passenger (31 байт)
     char bufPass[31] = {0};
     strncpy(bufPass, passenger.c_str(), 30);
     os.write(bufPass, 31);
 
-    // Р—Р°РїРёСЃСЊ РґР°С‚С‹ (РґРµРЅСЊ, РјРµСЃСЏС†, РіРѕРґ РєР°Рє short)
+    // Запись даты (день, месяц, год как short)
     short day = date.getDay();
     short month = date.getMonth();
     short year = date.getYear();
@@ -67,36 +67,36 @@ void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&year), sizeof(year));
 }
 
-// Р§С‚РµРЅРёРµ РёР· Р±РёРЅР°СЂРЅРѕРіРѕ РїРѕС‚РѕРєР° СЃ С„РёРєСЃРёСЂРѕРІР°РЅРЅС‹РјРё РїРѕР»СЏРјРё
+// Чтение из бинарного потока с фиксированными полями
 bool Request::readBinary(istream& is, Request& out) {
-    // Р§С‚РµРЅРёРµ РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂР°
+    // Чтение идентификатора
     if (!is.read(reinterpret_cast<char*>(&out.id), sizeof(out.id))) return false;
 
-    // Р§С‚РµРЅРёРµ Рё РєРѕРЅРІРµСЂС‚Р°С†РёСЏ РїРѕР»СЏ destination
+    // Чтение и конвертация поля destination
     char bufDest[31];
     if (!is.read(bufDest, 31)) return false;
     bufDest[30] = '\0';
     out.destination = string(bufDest);
 
-    // Р§С‚РµРЅРёРµ Рё РєРѕРЅРІРµСЂС‚Р°С†РёСЏ РїРѕР»СЏ flightNum
+    // Чтение и конвертация поля flightNum
     char bufFlight[16];
     if (!is.read(bufFlight, 16)) return false;
     bufFlight[15] = '\0';
     out.flightNum = string(bufFlight);
 
-    // Р§С‚РµРЅРёРµ Рё РєРѕРЅРІРµСЂС‚Р°С†РёСЏ РїРѕР»СЏ passenger
+    // Чтение и конвертация поля passenger
     char bufPass[31];
     if (!is.read(bufPass, 31)) return false;
     bufPass[30] = '\0';
     out.passenger = string(bufPass);
 
-    // Р§С‚РµРЅРёРµ РґР°С‚С‹ Рё СѓСЃС‚Р°РЅРѕРІРєР° РІ РѕР±СЉРµРєС‚
+    // Чтение даты и установка в объект
     short day, month, year;
     if (!is.read(reinterpret_cast<char*>(&day), sizeof(day))) return false;
     if (!is.read(reinterpret_cast<char*>(&month), sizeof(month))) return false;
     if (!is.read(reinterpret_cast<char*>(&year), sizeof(year))) return false;
     out.date.setDate(day, month, year);
 
-    // РЈСЃРїРµС€РЅРѕРµ С‡С‚РµРЅРёРµ
+    // Успешное чтение
     return true;
 }
