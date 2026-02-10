@@ -1,8 +1,9 @@
 #pragma once
 #include "pch.h"
+#include "VectorProcess.h"
 
 class App {
-    vector<float> v_;
+    VectorProcess vectorProcess_;
     string binFile_;
 
     // steps of Task 1 implemented as separate functions

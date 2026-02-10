@@ -61,8 +61,7 @@ void getXY(COORD* position);
 void cls();
 #include <Windows.h>
 
-// Печать UTF-8 строки в CP1251-консоль
-void printCp1251(const string& utf8);
+// (removed) printCp1251 moved out — no longer declared here
 #pragma endregion
 
 
