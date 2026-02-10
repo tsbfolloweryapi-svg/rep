@@ -19,8 +19,7 @@ class App {
 
     float readFloatFromCin(const string &prompt);
 
-    void saveToBinary() const;
-    void loadFromBinary();
+    // Binary save/load are handled by VectorProcess; App delegates to it in run().
 
 public:
     App();
