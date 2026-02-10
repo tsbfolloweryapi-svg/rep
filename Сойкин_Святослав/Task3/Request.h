@@ -2,25 +2,38 @@
 #include "pch.h"
 #include "Date.h"
 
+// Definition of Request record and helpers
 struct Request : public Object {
+    // identifier field
     int id;
-    string destination;  // logical field, serialized as fixed 31 bytes
-    string flightNum;    // logical field, serialized as fixed 16 bytes
-    string passenger;    // logical field, serialized as fixed 31 bytes
+
+    // destination string (variable-length in-memory)
+    string destination;
+
+    // flight number string (variable-length in-memory)
+    string flightNum;
+
+    // passenger name string (variable-length in-memory)
+    string passenger;
+
+    // desired date
     Date date;
 
-    static Request createFactory(int id);  // фабричный метод создания тестовой записи
+    // factory method: create a sample Request
+    static Request createFactory(int id);
 
-    // Binary (fixed-size) serialization helpers
+    // Binary (fixed-size) serialization helpers: write/read fixed-size records
     void writeBinary(ostream& os) const;
     static bool readBinary(istream& is, Request& out);
     static size_t binarySize() { return sizeof(int) + 31 + 16 + 31 + 3 * sizeof(short); }
 
+    // accessors
     int getId() const { return id; }
     string getDestination() const { return destination; }
     string getFlightNum() const { return flightNum; }
     string getPassenger() const { return passenger; }
     Date getDate() const { return date; }
 
-    string toString() const override;  // представление для вывода
+    // textual representation
+    string toString() const override;
 };

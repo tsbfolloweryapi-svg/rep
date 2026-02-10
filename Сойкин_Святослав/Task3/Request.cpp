@@ -1,64 +1,66 @@
 #include "Request.h"
 #include "Utils.h"
-// Создание тестовой записи (factory)
+
+// ?????????????/????? ?????
+// Factory: create a sample Request
 Request Request::createFactory(int id) {
-    // Инициализация структуры результата
+    // allocate and fill a Request object
     Request r;
     r.id = id;
 
-    // Формирование строки пункта назначения
-    string dest = "Пункт " + to_string(getRand(1, 15));
+    // build destination text
+    string dest = "Пункт назначения " + to_string(getRand(1, 15));
 
-    // Формирование строки номера рейса
+    // build flight number text
     string flight = "PO-" + to_string(getRand(1000, 9999)) + "K";
 
-    // Формирование строки пассажира
-    string pass = "Пассажир " + to_string(getRand(1, 30)) + " П.О.";
+    // build passenger name text
+    string pass = "Пассажир " + to_string(getRand(1, 30)) + " П.";
 
-    // Формирование даты вылета
+    // build date
     Date d;
     d.setDate(getRand(1, 28), getRand(1, 12), getRand(2025, 2027));
 
-    // Присвоение логических полей (строк) с обрезкой по максимально допустимой длине
-    r.destination = dest.substr(0, 30);
-    r.flightNum = flight.substr(0, 15);
-    r.passenger = pass.substr(0, 30);
+    // assign string fields
+    r.destination = dest;
+    r.flightNum = flight;
+    r.passenger = pass;
     r.date = d;
 
-    // Возврат заполненной записи
+    // return filled record
     return r;
 }
 
-// Преобразование записи в строку для вывода
+// Convert Request to human-readable string
 string Request::toString() const {
-    // Формирование человекочитаемой строки
+    // compose textual representation
     ostringstream oss;
-    oss << "ID: " << id << ", пункт: " << destination << ", рейс: " << flightNum
-        << ", пассажир: " << passenger << ", дата: " << date.toString();
+    oss << "ID: " << id << ", Пункт назначения: " << destination << ", Рейс: " << flightNum
+        << ", Пассажир: " << passenger << ", Дата: " << date.toString();
     return oss.str();
 }
 
-// Запись в бинарный поток с фиксированными полями
+// Serialize Request to fixed-size binary record
 void Request::writeBinary(ostream& os) const {
-    // Запись идентификатора
+    // write id
     os.write(reinterpret_cast<const char*>(&id), sizeof(id));
 
-    // Подготовка и запись поля destination (31 байт, включая терминатор)
-    char bufDest[31] = {0};
-    strncpy(bufDest, destination.c_str(), 30);
-    os.write(bufDest, 31);
+    // prepare and write fixed-size destination (31 bytes)
+    char destBuf[31] = {0};
+    strncpy(destBuf, destination.c_str(), 30);
+    os.write(destBuf, 31);
 
-    // Подготовка и запись поля flightNum (16 байт)
-    char bufFlight[16] = {0};
-    strncpy(bufFlight, flightNum.c_str(), 15);
-    os.write(bufFlight, 16);
+    // prepare and write fixed-size flight number (16 bytes)
+    char flightBuf[16] = {0};
+    strncpy(flightBuf, flightNum.c_str(), 15);
+    os.write(flightBuf, 16);
 
-    // Подготовка и запись поля passenger (31 байт)
-    char bufPass[31] = {0};
-    strncpy(bufPass, passenger.c_str(), 30);
-    os.write(bufPass, 31);
+    // prepare and write fixed-size passenger (31 bytes)
+    char passBuf[31] = {0};
+    strncpy(passBuf, passenger.c_str(), 30);
+    os.write(passBuf, 31);
 
-    // Запись даты (день, месяц, год как short)
+    // write date components
     short day = date.getDay();
     short month = date.getMonth();
     short year = date.getYear();
@@ -67,36 +69,36 @@ void Request::writeBinary(ostream& os) const {
     os.write(reinterpret_cast<const char*>(&year), sizeof(year));
 }
 
-// Чтение из бинарного потока с фиксированными полями
+// Deserialize Request from fixed-size binary record
 bool Request::readBinary(istream& is, Request& out) {
-    // Чтение идентификатора
+    // read id
     if (!is.read(reinterpret_cast<char*>(&out.id), sizeof(out.id))) return false;
 
-    // Чтение и конвертация поля destination
-    char bufDest[31];
-    if (!is.read(bufDest, 31)) return false;
-    bufDest[30] = '\0';
-    out.destination = string(bufDest);
+    // read fixed-size destination
+    char destBuf[31];
+    if (!is.read(destBuf, 31)) return false;
+    destBuf[30] = '\0';
+    out.destination = string(destBuf);
 
-    // Чтение и конвертация поля flightNum
-    char bufFlight[16];
-    if (!is.read(bufFlight, 16)) return false;
-    bufFlight[15] = '\0';
-    out.flightNum = string(bufFlight);
+    // read fixed-size flight number
+    char flightBuf[16];
+    if (!is.read(flightBuf, 16)) return false;
+    flightBuf[15] = '\0';
+    out.flightNum = string(flightBuf);
 
-    // Чтение и конвертация поля passenger
-    char bufPass[31];
-    if (!is.read(bufPass, 31)) return false;
-    bufPass[30] = '\0';
-    out.passenger = string(bufPass);
+    // read fixed-size passenger
+    char passBuf[31];
+    if (!is.read(passBuf, 31)) return false;
+    passBuf[30] = '\0';
+    out.passenger = string(passBuf);
 
-    // Чтение даты и установка в объект
+    // read date components
     short day, month, year;
     if (!is.read(reinterpret_cast<char*>(&day), sizeof(day))) return false;
     if (!is.read(reinterpret_cast<char*>(&month), sizeof(month))) return false;
     if (!is.read(reinterpret_cast<char*>(&year), sizeof(year))) return false;
-    out.date.setDate(day, month, year);
 
-    // Успешное чтение
+    // set date and return success
+    out.date.setDate(day, month, year);
     return true;
 }
